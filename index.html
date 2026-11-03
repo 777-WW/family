@@ -112,6 +112,7 @@ main{max-width:600px;margin:0 auto;padding:20px 16px calc(72px + env(safe-area-i
 .login-icon{font-size:44px;margin-bottom:14px}
 .login-card h2{font-size:20px;font-weight:700;margin-bottom:8px}
 .login-card p{font-size:14px;color:var(--text2);margin-bottom:24px;line-height:1.8;word-break:break-all}
+.pw-error{color:var(--red);font-size:13px;margin-bottom:10px;display:none}
 </style>
 </head>
 <body>
@@ -133,7 +134,7 @@ main{max-width:600px;margin:0 auto;padding:20px 16px calc(72px + env(safe-area-i
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, onSnapshot }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut }
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
 const firebaseConfig = {
@@ -148,11 +149,9 @@ const app  = initializeApp(firebaseConfig);
 const db   = getFirestore(app);
 const auth = getAuth(app);
 
-// ── 暱稱（選填）：想讓帳本顯示「爸爸」「媽媽」就填在這裡，沒填就用 Google 名字 ──
-const NICKNAMES = {
-  // 'dad@gmail.com': '爸爸',
-  // 'mom@gmail.com': '媽媽',
-};
+// ── 家庭共用帳號：這個 email 要和 Firebase Authentication 裡建立的使用者一致 ──
+// （密碼不寫在程式裡，存在 Firebase，只有輸入正確才能讀寫資料）
+const FAMILY_EMAIL = 'family@jiazhangben.app';
 
 // ── helpers ───────────────────────────────────────────
 function esc(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -237,10 +236,7 @@ function monthTxs(){
   return S.txs.filter(t=>cleanDate(t.date).startsWith(mk));
 }
 
-// ── 登入（Google）──────────────────────────────────────
-function displayNameOf(u){
-  return NICKNAMES[(u.email||'').toLowerCase()] || u.displayName || (u.email||'我').split('@')[0];
-}
+// ── 登入（家庭密碼）──────────────────────────────────────
 function renderLogin(){
   document.getElementById('bnav').style.display='none';
   document.getElementById('user-area').innerHTML='';
@@ -248,9 +244,13 @@ function renderLogin(){
     <div id="login-screen"><div class="login-card">
       <div class="login-icon">🏡</div>
       <h2>家帳本</h2>
-      <p>請用家人的 Google 帳號登入</p>
-      <button class="submit-btn" id="login-btn" onclick="login()">使用 Google 登入</button>
+      <p>請輸入家庭密碼</p>
+      <div class="fgrp"><input class="finput" id="pw-input" type="password" placeholder="密碼"
+        autocomplete="current-password" onkeydown="if(event.key==='Enter')login()"></div>
+      <div class="pw-error" id="pw-err"></div>
+      <button class="submit-btn" id="login-btn" onclick="login()">進入</button>
     </div></div>`;
+  setTimeout(()=>document.getElementById('pw-input')?.focus(),100);
 }
 function renderDenied(){
   document.getElementById('bnav').style.display='none';
@@ -258,22 +258,25 @@ function renderDenied(){
     <div id="login-screen"><div class="login-card">
       <div class="login-icon">🔒</div>
       <h2>沒有存取權限</h2>
-      <p>${esc(S.user?.email||'')}<br>這個帳號還沒被加入家帳本，<br>請請管理員把這個 email 加進去。</p>
-      <button class="submit-btn" onclick="logout(true)">換一個帳號</button>
+      <p>資料庫的安全規則沒有允許這個帳號，<br>請檢查 Firestore 規則設定。</p>
+      <button class="submit-btn" onclick="logout(true)">回到登入畫面</button>
     </div></div>`;
 }
 async function login(){
+  const input=document.getElementById('pw-input');
+  const err=document.getElementById('pw-err');
+  const pw=input?.value||'';
+  if(!pw){ input?.focus(); return; }
   const btn=document.getElementById('login-btn'); if(btn) btn.disabled=true;
-  const provider=new GoogleAuthProvider();
-  provider.setCustomParameters({prompt:'select_account'});
   try{
-    await signInWithPopup(auth,provider);
+    await signInWithEmailAndPassword(auth,FAMILY_EMAIL,pw);
   }catch(e){
-    if(e.code==='auth/popup-blocked'||e.code==='auth/operation-not-supported-in-environment'){
-      await signInWithRedirect(auth,provider);
-    }else if(e.code!=='auth/popup-closed-by-user'&&e.code!=='auth/cancelled-popup-request'){
-      showToast('登入失敗：'+e.message,3500);
-    }
+    let msg='登入失敗：'+e.message;
+    if(['auth/invalid-credential','auth/wrong-password','auth/invalid-login-credentials','auth/user-not-found'].includes(e.code)) msg='密碼錯誤，請再試一次';
+    else if(e.code==='auth/too-many-requests') msg='嘗試太多次了，請稍後再試';
+    else if(e.code==='auth/network-request-failed') msg='網路連線失敗';
+    if(err){ err.textContent=msg; err.style.display='block'; }
+    if(input){ input.value=''; input.focus(); }
     if(btn) btn.disabled=false;
   }
 }
@@ -281,13 +284,11 @@ async function logout(skipConfirm){
   if(!skipConfirm&&!confirm('要登出嗎？')) return;
   await signOut(auth);
 }
-function renderUserChip(u){
-  const name=S.user.name;
-  const av=u.photoURL?`<img src="${esc(u.photoURL)}" alt="" referrerpolicy="no-referrer">`:esc((name||'我')[0]);
+function renderUserChip(){
   document.getElementById('user-area').innerHTML=`
     <div class="user-chip" onclick="logout()" title="點一下登出">
-      <div class="avatar">${av}</div>
-      <span class="uname">${esc(name)}</span>
+      <div class="avatar">🔓</div>
+      <span class="uname">登出</span>
     </div>`;
 }
 
@@ -315,13 +316,12 @@ function startListeners(){
   },onErr));
 }
 
-getRedirectResult(auth).catch(e=>showToast('登入失敗：'+e.message,3500));
 onAuthStateChanged(auth,u=>{
   stopListeners();
   document.querySelectorAll('.backdrop').forEach(b=>b.remove());
   if(!u){ S.user=null; S.accounts=[]; S.txs=[]; renderLogin(); return; }
-  S.user={id:u.uid,name:displayNameOf(u),email:u.email};
-  renderUserChip(u);
+  S.user={id:u.uid,name:''};
+  renderUserChip();
   document.getElementById('main').innerHTML='<div class="loading">載入中…</div>';
   startListeners();
 });
