@@ -24,26 +24,25 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 body{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:101}
 .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;background:var(--surface);border-bottom:1px solid var(--border);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
-.logo{font-size:17px;font-weight:700;color:var(--text)}
-.user-chip{display:flex;align-items:center;gap:7px;background:var(--surface2);border-radius:99px;padding:3px 12px 3px 3px}
-.avatar{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.uname{font-size:13px;font-weight:500;color:var(--text2);max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logo{font-size:17px;font-weight:700}
+.user-chip{display:flex;align-items:center;gap:7px;background:var(--surface2);border-radius:99px;padding:3px 12px 3px 3px;cursor:pointer}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.uname{font-size:13px;font-weight:500;color:var(--text2);max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bnav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--surface);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom,0px)}
 .bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:3px;cursor:pointer;color:var(--text3);font-size:11px;transition:color .15s}
 .bnav-item.active{color:var(--blue)}
 .bnav-icon{font-size:20px;line-height:1}
 main{max-width:600px;margin:0 auto;padding:20px 16px calc(72px + env(safe-area-inset-bottom,0px))}
 .asset-hero{text-align:center;padding:28px 0 24px}
-.asset-label{font-size:13px;color:var(--text3);font-weight:500;letter-spacing:.3px;margin-bottom:6px}
-.asset-total{font-size:38px;font-family:var(--mono);font-weight:500;letter-spacing:-1px;line-height:1}
+.asset-label{font-size:13px;color:var(--text3);font-weight:500;margin-bottom:6px}
+.asset-total{font-size:38px;font-family:var(--mono);font-weight:500;letter-spacing:-1px}
 .asset-delta{font-size:13px;margin-top:6px;color:var(--text3)}
-.asset-delta .up{color:var(--green)}.asset-delta .dn{color:var(--red)}
-.accs{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.up{color:var(--green)}.dn{color:var(--red)}
+.accs{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
 .acc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .1s}
 .acc-card:hover{background:var(--surface2)}
 .acc-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.acc-info{flex:1;min-width:0}.acc-name{font-size:14px;font-weight:600}.acc-type{font-size:12px;color:var(--text3)}
+.acc-info{flex:1}.acc-name{font-size:14px;font-weight:600}.acc-type{font-size:12px;color:var(--text3)}
 .acc-bal{font-family:var(--mono);font-size:16px;font-weight:500}.acc-bal.neg{color:var(--red)}
 .add-btn{border:1.5px dashed var(--border);border-radius:var(--r);padding:12px;text-align:center;font-size:13px;color:var(--text3);cursor:pointer;background:none;width:100%;transition:all .15s}
 .add-btn:hover{border-color:var(--blue);color:var(--blue)}
@@ -51,37 +50,37 @@ main{max-width:600px;margin:0 auto;padding:20px 16px calc(72px + env(safe-area-i
 .sec-title{font-size:13px;font-weight:600;color:var(--text2)}
 .month-bar{display:flex;align-items:center;gap:8px;margin-bottom:16px}
 .month-bar h2{flex:1;font-size:15px;font-weight:600}
-.icon-btn{width:32px;height:32px;border-radius:8px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--text)}
+.icon-btn{width:32px;height:32px;border-radius:8px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px}
 .icon-btn:hover{background:var(--surface2)}.icon-btn:disabled{opacity:.35;cursor:not-allowed}
 .summary-strip{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
 .scard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
-.scard-label{font-size:11px;color:var(--text3);font-weight:500;letter-spacing:.3px;margin-bottom:2px}
+.scard-label{font-size:11px;color:var(--text3);font-weight:500;margin-bottom:2px}
 .scard-val{font-size:19px;font-family:var(--mono);font-weight:500}
 .scard-val.inc{color:var(--green)}.scard-val.exp{color:var(--red)}
 .ftabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
 .ftab{padding:5px 12px;border-radius:99px;font-size:13px;font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .12s}
 .ftab.active{background:var(--blue);border-color:var(--blue);color:#fff}
 .tx-group{margin-bottom:16px}
-.tx-date-hdr{font-size:12px;color:var(--text3);font-weight:600;padding:4px 0 6px;letter-spacing:.3px}
+.tx-date-hdr{font-size:12px;color:var(--text3);font-weight:600;padding:4px 0 6px}
 .tx-item{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:11px 13px;display:flex;align-items:center;gap:11px;margin-bottom:3px;cursor:pointer;transition:background .1s}
 .tx-item:hover{background:var(--surface2)}
 .tx-cat-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .tx-body{flex:1;min-width:0}.tx-desc{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tx-meta{font-size:11px;color:var(--text3);display:flex;gap:5px;align-items:center;margin-top:1px}
+.tx-meta{font-size:11px;color:var(--text3);display:flex;gap:5px;align-items:center;margin-top:1px;flex-wrap:wrap}
 .tx-acc-tag{background:var(--surface2);border-radius:99px;padding:1px 7px;font-size:11px;font-weight:500}
 .tx-amt{font-family:var(--mono);font-size:14px;font-weight:500;white-space:nowrap;text-align:right}
 .tx-amt.inc{color:var(--green)}.tx-amt.exp{color:var(--red)}.tx-amt.xfr{color:var(--text3)}
 .empty-state{text-align:center;padding:48px 16px;color:var(--text3)}
-.empty-state .ei{font-size:36px;margin-bottom:10px}.empty-state p{font-size:14px;line-height:1.7}
+.empty-icon{font-size:36px;margin-bottom:10px}
 .fab{position:fixed;bottom:calc(68px + env(safe-area-inset-bottom,0px));right:18px;width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(45,91,227,.35);cursor:pointer;z-index:50;transition:transform .1s}
 .fab:hover{transform:scale(1.06)}
-.backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:flex-end;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px)}
+.backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:flex-end;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(min-width:560px){.backdrop{align-items:center}}
-.modal{background:var(--surface);border-radius:16px 16px 0 0;width:100%;max-width:480px;padding:22px 20px;max-height:88vh;overflow-y:auto}
+.modal{background:var(--surface);border-radius:16px 16px 0 0;width:100%;max-width:480px;padding:22px 20px;max-height:90vh;overflow-y:auto}
 @media(min-width:560px){.modal{border-radius:16px}}
 .modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
 .modal-hdr h3{font-size:16px;font-weight:700}
-.close-btn{width:28px;height:28px;border-radius:50%;background:var(--surface2);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text2)}
+.close-btn{width:28px;height:28px;border-radius:50%;background:var(--surface2);border:none;cursor:pointer;font-size:15px;color:var(--text2)}
 .type-row{display:flex;gap:6px;margin-bottom:16px}
 .type-btn{flex:1;padding:9px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);font-size:13px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .12s}
 .type-btn.on-inc{background:var(--green-l);border-color:var(--green);color:var(--green)}
@@ -93,24 +92,23 @@ main{max-width:600px;margin:0 auto;padding:20px 16px calc(72px + env(safe-area-i
 .finput:focus{border-color:var(--blue)}.finput.mono{font-family:var(--mono)}
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .cat-btn{border-radius:9px;background:var(--surface2);border:1.5px solid var(--border);cursor:pointer;font-size:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px 4px;transition:all .12s}
-.cat-btn .cat-name{font-size:11px;color:var(--text2);font-family:var(--sans);font-weight:500;line-height:1}
+.cat-btn .cn{font-size:11px;color:var(--text2);font-family:var(--sans);font-weight:500;line-height:1}
 .cat-btn.sel{border-color:var(--blue);background:var(--blue-l);box-shadow:0 0 0 2px var(--blue)}
-.cat-btn.sel .cat-name{color:var(--blue)}
-.submit-btn{width:100%;padding:13px;border-radius:9px;background:var(--blue);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;margin-top:6px;transition:opacity .12s}
+.cat-btn.sel .cn{color:var(--blue)}
+.submit-btn{width:100%;padding:13px;border-radius:9px;background:var(--blue);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;margin-top:6px}
 .submit-btn:disabled{opacity:.45;cursor:not-allowed}
-.del-btn{width:100%;padding:11px;border-radius:9px;background:transparent;color:var(--red);font-size:14px;font-weight:600;border:1.5px solid var(--red);cursor:pointer;margin-top:7px;transition:background .12s}
+.del-btn{width:100%;padding:11px;border-radius:9px;background:transparent;color:var(--red);font-size:14px;font-weight:600;border:1.5px solid var(--red);cursor:pointer;margin-top:7px}
 .del-btn:hover{background:var(--red-l)}
 .hint{font-size:12px;color:var(--text3);margin-top:4px}
 .loading{text-align:center;padding:60px;color:var(--text3);font-size:14px}
 .toast{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#1C1C1C;color:#fff;padding:10px 20px;border-radius:99px;font-size:13px;z-index:999;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1}
 #login-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 54px)}
-.login-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px;max-width:360px;width:100%;text-align:center}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px;max-width:360px;width:100%;text-align:center}
 .login-icon{font-size:44px;margin-bottom:14px}
 .login-card h2{font-size:20px;font-weight:700;margin-bottom:8px}
-.login-card p{font-size:14px;color:var(--text2);margin-bottom:26px;line-height:1.8}
-.google-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 18px;font-size:14px;font-weight:500;color:var(--text);cursor:pointer;width:100%;transition:background .12s}
-.google-btn:hover{background:var(--border)}
+.login-card p{font-size:14px;color:var(--text2);margin-bottom:24px;line-height:1.8}
+.pw-error{color:var(--red);font-size:13px;margin-bottom:10px;display:none}
 </style>
 </head>
 <body>
@@ -121,37 +119,43 @@ main{max-width:600px;margin:0 auto;padding:20px 16px calc(72px + env(safe-area-i
   </header>
   <main id="main"><div class="loading">載入中…</div></main>
   <nav class="bnav" id="bnav" style="display:none">
-    <div class="bnav-item active" id="tab-assets" onclick="switchTab('assets')">
-      <div class="bnav-icon">🏦</div>資產
-    </div>
-    <div class="bnav-item" id="tab-txs" onclick="switchTab('txs')">
-      <div class="bnav-icon">📋</div>記帳
-    </div>
-    <div class="bnav-item" id="tab-stats" onclick="switchTab('stats')">
-      <div class="bnav-icon">📊</div>統計
-    </div>
+    <div class="bnav-item active" id="tab-assets" onclick="switchTab('assets')"><div class="bnav-icon">🏦</div>資產</div>
+    <div class="bnav-item" id="tab-txs" onclick="switchTab('txs')"><div class="bnav-icon">📋</div>記帳</div>
+    <div class="bnav-item" id="tab-stats" onclick="switchTab('stats')"><div class="bnav-icon">📊</div>統計</div>
   </nav>
 </div>
 <div class="toast" id="toast"></div>
 
-<script>
-const API = 'https://script.google.com/macros/s/AKfycbyOyH3nL1BtZOcUNo3vGMMppJiw7A7QfY6aNsn1jCoE4CmvrdDtEtEDr8rbXbjn239j/exec';
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, updateDoc, onSnapshot, query, orderBy }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-// ── helpers ──────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyDKO-ajmZavBzkSIFJ4tFERTeQh6IfkOHc",
+  authDomain: "family-budget-fda7b.firebaseapp.com",
+  projectId: "family-budget-fda7b",
+  storageBucket: "family-budget-fda7b.firebasestorage.app",
+  messagingSenderId: "736951783389",
+  appId: "1:736951783389:web:9bd244b07e142097637034"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// ── 密碼（改這裡）──────────────────────────────────────
+const APP_PASSWORD = '2610';
+
+// ── helpers ───────────────────────────────────────────
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function fmt(n){ return 'NT$'+Math.abs(n).toLocaleString('zh-TW',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+function fmt(n){ return 'NT$'+Math.abs(Number(n)||0).toLocaleString('zh-TW',{maximumFractionDigits:0}); }
 function today(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 function monthKey(y,m){ return `${y}-${String(m).padStart(2,'0')}`; }
-function uuid(){ return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return(c=='x'?r:(r&0x3|0x8)).toString(16)}); }
-function parseDate(s){
-  // 處理 ISO 格式 2026-11-01T16:00:00.000Z 或純日期 2026-11-01
-  if(!s) return '';
-  return String(s).substring(0,10); // 只取前10碼 YYYY-MM-DD
-}
+function uuid(){ return crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2)+Date.now(); }
+function showToast(msg,dur=2200){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),dur); }
 function fmtDateLabel(s){
-  s = parseDate(s);
-  const [y,mo,d]=s.split('-').map(Number);
-  if(!y||!mo||!d) return s;
+  if(!s) return ''; s=String(s).substring(0,10);
+  const [y,mo,d]=s.split('-').map(Number); if(!y||!mo||!d) return s;
   const dt=new Date(y,mo-1,d);
   const wd=['日','一','二','三','四','五','六'][dt.getDay()];
   const now=new Date(); now.setHours(0,0,0,0);
@@ -160,20 +164,9 @@ function fmtDateLabel(s){
   if(diff===-1) return `昨天（週${wd}）`;
   return `${mo}月${d}日（週${wd}）`;
 }
-function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000); }
+function cleanDate(s){ return s?String(s).substring(0,10):''; }
 
-// ── API calls ─────────────────────────────────────────
-async function apiGet(params){
-  const url=API+'?'+new URLSearchParams({...params, _t: Date.now()});
-  const res=await fetch(url, {cache: 'no-store'});
-  return res.json();
-}
-async function apiPost(data){
-  const res=await fetch(API,{method:'POST',body:JSON.stringify(data)});
-  return res.json();
-}
-
-// ── categories ────────────────────────────────────────
+// ── 分類 ──────────────────────────────────────────────
 const CATS={
   expense:[
     {id:'food',icon:'🍱',name:'餐飲'},{id:'transport',icon:'🚌',name:'交通'},
@@ -204,15 +197,15 @@ const S={
   user:null, accounts:[], txs:[],
   tab:'assets',
   txYear:new Date().getFullYear(), txMonth:new Date().getMonth()+1,
-  txFilter:'all', loading:false,
+  txFilter:'all',
 };
 
 // ── computed ──────────────────────────────────────────
 function accountBalance(accId){
   const acc=S.accounts.find(a=>a.id===accId); if(!acc) return 0;
-  let bal=parseFloat(acc.initBalance)||0;
+  let bal=Number(acc.initBalance)||0;
   for(const t of S.txs){
-    const amt=parseFloat(t.amount)||0;
+    const amt=Number(t.amount)||0;
     if(t.type==='inc'&&t.accountId===accId) bal+=amt;
     if(t.type==='exp'&&t.accountId===accId) bal-=amt;
     if(t.type==='xfr'&&t.accountId===accId) bal-=amt;
@@ -223,112 +216,100 @@ function accountBalance(accId){
 function totalAssets(){ return S.accounts.reduce((s,a)=>s+accountBalance(a.id),0); }
 function monthTxs(){
   const mk=monthKey(S.txYear,S.txMonth);
-  return S.txs.filter(t=>parseDate(t.date).startsWith(mk));
+  return S.txs.filter(t=>cleanDate(t.date).startsWith(mk));
 }
 
-// ── 密碼設定（改這裡）──────────────────────────────────
-const APP_PASSWORD = 'family2024';  // ← 改成你想要的密碼
-
-// ── 登入畫面 ──────────────────────────────────────────
+// ── 登入 ──────────────────────────────────────────────
 function renderLogin(step){
-  // step: 'password' | 'name'
-  const isPassword = step !== 'name';
   document.getElementById('bnav').style.display='none';
+  const isPw = step!=='name';
   document.getElementById('main').innerHTML=`
-    <div id="login-screen">
-      <div class="login-card">
-        <div class="login-icon">🏡</div>
-        <h2>家帳本</h2>
-        ${isPassword
-          ? `<p>請輸入家庭密碼<br>才能進入帳本</p>
-             <div class="fgrp">
-               <input class="finput" id="pw-input" type="password" placeholder="密碼"
-                 onkeydown="if(event.key==='Enter')checkPassword()">
-             </div>
-             <div id="pw-error" style="color:var(--red);font-size:13px;margin-bottom:10px;display:none">密碼錯誤，請再試一次</div>
-             <button class="submit-btn" onclick="checkPassword()">進入</button>`
-          : `<p>第一次使用請輸入你的名字<br>之後帳本會顯示是誰記的帳</p>
-             <div class="fgrp">
-               <input class="finput" id="name-input" placeholder="你的名字（例：爸爸、媽媽）"
-                 onkeydown="if(event.key==='Enter')submitName()">
-             </div>
-             <button class="submit-btn" onclick="submitName()">開始使用</button>`
-        }
-      </div>
-    </div>`;
-  setTimeout(()=>{
-    document.getElementById(isPassword?'pw-input':'name-input')?.focus();
-  },100);
+    <div id="login-screen"><div class="login-card">
+      <div class="login-icon">🏡</div>
+      <h2>家帳本</h2>
+      ${isPw
+        ?`<p>請輸入家庭密碼</p>
+          <div class="fgrp"><input class="finput" id="pw-input" type="password" placeholder="密碼"
+            onkeydown="if(event.key==='Enter')checkPw()"></div>
+          <div class="pw-error" id="pw-err">密碼錯誤，請再試一次</div>
+          <button class="submit-btn" onclick="checkPw()">進入</button>`
+        :`<p>請輸入你的名字<br><span style="font-size:12px;color:var(--text3)">之後帳本會顯示是誰記的帳</span></p>
+          <div class="fgrp"><input class="finput" id="name-input" placeholder="例：爸爸、媽媽、阿嬤"
+            onkeydown="if(event.key==='Enter')submitName()"></div>
+          <button class="submit-btn" onclick="submitName()">開始使用</button>`
+      }
+    </div></div>`;
+  setTimeout(()=>document.getElementById(isPw?'pw-input':'name-input')?.focus(),100);
 }
 
-function checkPassword(){
-  const pw = document.getElementById('pw-input')?.value;
-  if(pw === APP_PASSWORD){
-    sessionStorage.setItem('family_budget_auth','1');
-    // 檢查是否有名字
-    const saved=localStorage.getItem('family_budget_user');
+function checkPw(){
+  const pw=document.getElementById('pw-input')?.value;
+  if(pw===APP_PASSWORD){
+    sessionStorage.setItem('fb_auth','1');
+    const saved=localStorage.getItem('fb_user');
     if(saved){ try{ S.user=JSON.parse(saved); startApp(); return; }catch(e){} }
     renderLogin('name');
   } else {
-    document.getElementById('pw-error').style.display='block';
+    document.getElementById('pw-err').style.display='block';
     document.getElementById('pw-input').value='';
     document.getElementById('pw-input').focus();
   }
 }
-
 function submitName(){
   const name=document.getElementById('name-input')?.value.trim();
   if(!name){ showToast('請輸入名字'); return; }
   const user={name, id:uuid()};
-  localStorage.setItem('family_budget_user', JSON.stringify(user));
+  localStorage.setItem('fb_user', JSON.stringify(user));
   S.user=user;
   startApp();
 }
-
 function checkAuth(){
-  // 每次開啟都需要輸密碼（session 層級），但名字記在 localStorage
-  if(sessionStorage.getItem('family_budget_auth')!=='1') return false;
-  const saved=localStorage.getItem('family_budget_user');
+  if(sessionStorage.getItem('fb_auth')!=='1') return false;
+  const saved=localStorage.getItem('fb_user');
   if(saved){ try{ S.user=JSON.parse(saved); return true; }catch(e){} }
   return false;
 }
 
-async function startApp(){
-  document.getElementById('main').innerHTML='<div class="loading">載入中…</div>';
-  renderUserChip();
-  await loadAll();
-  document.getElementById('bnav').style.display='flex';
-  render();
-}
-
 // ── init ──────────────────────────────────────────────
 async function init(){
-  document.getElementById('main').innerHTML='<div class="loading">載入中…</div>';
   if(!checkAuth()){ renderLogin('password'); return; }
-  renderUserChip();
+  document.getElementById('user-area').innerHTML=`
+    <div class="user-chip">
+      <div class="avatar">${esc((S.user.name||'我')[0])}</div>
+      <span class="uname">${esc(S.user.name)}</span>
+    </div>`;
+  document.getElementById('main').innerHTML='<div class="loading">載入中…</div>';
   await loadAll();
   document.getElementById('bnav').style.display='flex';
   render();
 }
 
-function renderUserChip(){
+async function startApp(){
   document.getElementById('user-area').innerHTML=`
     <div class="user-chip">
-      <div class="avatar">${esc(S.user.name[0])}</div>
+      <div class="avatar">${esc((S.user.name||'我')[0])}</div>
       <span class="uname">${esc(S.user.name)}</span>
     </div>`;
+  document.getElementById('main').innerHTML='<div class="loading">載入中…</div>';
+  await loadAll();
+  document.getElementById('bnav').style.display='flex';
+  render();
 }
 
+// ── Firebase 讀寫 ──────────────────────────────────────
 async function loadAll(){
   try{
-    const data=await apiGet({action:'getAll'});
-    S.accounts=Array.isArray(data.accounts)?data.accounts:[];
-    S.txs=Array.isArray(data.transactions)?data.transactions:[];
-    S.txs.sort((a,b)=>String(b.date).localeCompare(String(a.date))||(Number(b.createdAt)||0)-(Number(a.createdAt)||0));
-  }catch(e){ S.accounts=[]; S.txs=[]; showToast('載入失敗，請重新整理'); }
+    const [aSnap, tSnap] = await Promise.all([
+      getDocs(collection(db,'accounts')),
+      getDocs(collection(db,'txs')),
+    ]);
+    S.accounts = aSnap.docs.map(d=>({id:d.id,...d.data()}));
+    S.txs = tSnap.docs.map(d=>({id:d.id,...d.data()}));
+    S.txs.sort((a,b)=>cleanDate(b.date).localeCompare(cleanDate(a.date))||(b.createdAt||0)-(a.createdAt||0));
+  }catch(e){ showToast('載入失敗：'+e.message,3000); }
 }
 
-// ── routing ───────────────────────────────────────────
+// ── 路由 ──────────────────────────────────────────────
 function switchTab(tab){
   S.tab=tab;
   ['assets','txs','stats'].forEach(t=>document.getElementById('tab-'+t)?.classList.toggle('active',t===tab));
@@ -340,14 +321,13 @@ function render(){
   else renderStats();
 }
 
-// ── assets tab ────────────────────────────────────────
+// ── 資產頁 ────────────────────────────────────────────
 function renderAssets(){
   const total=totalAssets();
-  const now=new Date();
-  const mk=monthKey(now.getFullYear(),now.getMonth()+1);
-  const mTxs=S.txs.filter(t=>String(t.date).startsWith(mk));
-  const mInc=mTxs.filter(t=>t.type==='inc').reduce((s,t)=>s+(parseFloat(t.amount)||0),0);
-  const mExp=mTxs.filter(t=>t.type==='exp').reduce((s,t)=>s+(parseFloat(t.amount)||0),0);
+  const mk=monthKey(new Date().getFullYear(),new Date().getMonth()+1);
+  const mTxs=S.txs.filter(t=>cleanDate(t.date).startsWith(mk));
+  const mInc=mTxs.filter(t=>t.type==='inc').reduce((s,t)=>s+Number(t.amount),0);
+  const mExp=mTxs.filter(t=>t.type==='exp').reduce((s,t)=>s+Number(t.amount),0);
   const mNet=mInc-mExp;
   const accCards=S.accounts.map(a=>{
     const bal=accountBalance(a.id); const at=accTypeById(a.type);
@@ -367,27 +347,26 @@ function renderAssets(){
     <div class="accs">${accCards}<button class="add-btn" onclick="openAccModal()">＋ 新增帳戶</button></div>`;
 }
 
-// ── account detail ────────────────────────────────────
+// ── 帳戶詳情 ──────────────────────────────────────────
 function openAccDetail(id){
   const acc=S.accounts.find(a=>a.id===id); if(!acc) return;
   const at=accTypeById(acc.type); const bal=accountBalance(id);
-  const relTxs=S.txs.filter(t=>t.accountId===id||t.toAccountId===id).slice(0,20);
+  const relTxs=S.txs.filter(t=>t.accountId===id||t.toAccountId===id).slice(0,30);
   const txRows=relTxs.length===0
     ?'<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">此帳戶尚無記錄</div>'
     :relTxs.map(t=>{
         const isXfrOut=t.type==='xfr'&&t.accountId===id;
-        const amt=t.type==='xfr'?(isXfrOut?'－':'＋')+fmt(t.amount):(t.type==='inc'?'＋':'－')+fmt(t.amount);
         const cls=t.type==='xfr'?(isXfrOut?'exp':'inc'):(t.type==='inc'?'inc':'exp');
+        const amt=(t.type==='xfr'?(isXfrOut?'－':'＋'):(t.type==='inc'?'＋':'－'))+fmt(t.amount);
         const cat=catById(t.category||'');
         return `<div class="tx-item" style="cursor:default">
           <div class="tx-cat-icon" style="background:${t.type==='inc'?'var(--green-l)':t.type==='xfr'?'var(--blue-l)':'var(--red-l)'}">${t.type==='xfr'?'↔':cat.icon}</div>
           <div class="tx-body"><div class="tx-desc">${esc(t.desc||(t.type==='xfr'?'轉帳':cat.name))}</div>
-          <div class="tx-meta"><span>${t.date}</span></div></div>
+          <div class="tx-meta"><span>${cleanDate(t.date)}</span></div></div>
           <div class="tx-amt ${cls}">${amt}</div>
         </div>`;
       }).join('');
-  const bd=document.createElement('div'); bd.className='backdrop'; bd.id='acc-detail-bd';
-  bd.onclick=e=>{if(e.target===bd)bd.remove();};
+  const bd=mkBackdrop('acc-detail-bd');
   bd.innerHTML=`<div class="modal">
     <div class="modal-hdr"><h3>${at.icon} ${esc(acc.name)}</h3>
       <button class="close-btn" onclick="document.getElementById('acc-detail-bd').remove()">✕</button></div>
@@ -398,15 +377,14 @@ function openAccDetail(id){
     </div>
     <div class="sec-hdr"><span class="sec-title">最近記錄</span></div>
     ${txRows}
-    <button class="del-btn" style="margin-top:16px" onclick="deleteAcc('${esc(id)}')">刪除此帳戶</button>
+    <button class="del-btn" style="margin-top:14px" onclick="deleteAcc('${esc(id)}')">刪除此帳戶</button>
   </div>`;
   document.body.appendChild(bd);
 }
 
 function openAccModal(){
   const typeOpts=ACC_TYPES.map(t=>`<option value="${t.id}">${t.icon} ${t.label}</option>`).join('');
-  const bd=document.createElement('div'); bd.className='backdrop'; bd.id='acc-modal-bd';
-  bd.onclick=e=>{if(e.target===bd)bd.remove();};
+  const bd=mkBackdrop('acc-modal-bd');
   bd.innerHTML=`<div class="modal">
     <div class="modal-hdr"><h3>新增帳戶</h3>
       <button class="close-btn" onclick="document.getElementById('acc-modal-bd').remove()">✕</button></div>
@@ -416,8 +394,8 @@ function openAccModal(){
       <select class="finput" id="an-type">${typeOpts}</select></div>
     <div class="fgrp"><label class="flabel">初始餘額（今天的實際餘額）</label>
       <input class="finput mono" id="an-init" type="number" placeholder="0">
-      <div class="hint">之後所有收支都會從這個數字開始累積</div></div>
-    <button class="submit-btn" onclick="saveAcc()">建立帳戶</button>
+      <div class="hint">之後所有收支都從這個數字開始累積</div></div>
+    <button class="submit-btn" id="acc-submit" onclick="saveAcc()">建立帳戶</button>
   </div>`;
   document.body.appendChild(bd);
   document.getElementById('an-name').focus();
@@ -427,40 +405,39 @@ async function saveAcc(){
   const name=document.getElementById('an-name')?.value.trim();
   const type=document.getElementById('an-type')?.value;
   const init=parseFloat(document.getElementById('an-init')?.value)||0;
-  if(!name){showToast('請輸入帳戶名稱');return;}
-  const btn=document.querySelector('#acc-modal-bd .submit-btn'); if(btn) btn.disabled=true;
-  const data={id:uuid(),name,type,initBalance:init,createdAt:Date.now()};
-  const res=await apiPost({action:'addAccount',data});
-  if(res.success){
-    S.accounts.push(data);
+  if(!name){ showToast('請輸入帳戶名稱'); return; }
+  const btn=document.getElementById('acc-submit'); if(btn) btn.disabled=true;
+  try{
+    const ref=await addDoc(collection(db,'accounts'),{name,type,initBalance:init,createdAt:Date.now()});
+    S.accounts.push({id:ref.id,name,type,initBalance:init,createdAt:Date.now()});
     document.getElementById('acc-modal-bd')?.remove();
-    renderAssets(); showToast('帳戶已建立');
-  }else{ showToast('失敗：'+(res.error||'未知錯誤')); if(btn) btn.disabled=false; }
+    renderAssets(); showToast('帳戶已建立 ✓');
+  }catch(e){ showToast('失敗：'+e.message); if(btn) btn.disabled=false; }
 }
 
 async function deleteAcc(id){
-  if(!confirm('刪除帳戶？相關記帳記錄會保留。')) return;
-  const res=await apiPost({action:'deleteAccount',id});
-  if(res.success){
+  if(!confirm('刪除帳戶？')) return;
+  try{
+    await deleteDoc(doc(db,'accounts',id));
     S.accounts=S.accounts.filter(a=>a.id!==id);
     document.getElementById('acc-detail-bd')?.remove();
     renderAssets(); showToast('已刪除');
-  }else showToast('刪除失敗');
+  }catch(e){ showToast('刪除失敗：'+e.message); }
 }
 
-// ── txs tab ───────────────────────────────────────────
+// ── 記帳頁 ────────────────────────────────────────────
 function renderTxs(){
   const now=new Date();
   const isCurrent=S.txYear===now.getFullYear()&&S.txMonth===now.getMonth()+1;
   let list=monthTxs();
   if(S.txFilter!=='all') list=list.filter(t=>t.type===S.txFilter);
-  const allInc=monthTxs().filter(t=>t.type==='inc').reduce((s,t)=>s+(parseFloat(t.amount)||0),0);
-  const allExp=monthTxs().filter(t=>t.type==='exp').reduce((s,t)=>s+(parseFloat(t.amount)||0),0);
+  const allInc=monthTxs().filter(t=>t.type==='inc').reduce((s,t)=>s+Number(t.amount),0);
+  const allExp=monthTxs().filter(t=>t.type==='exp').reduce((s,t)=>s+Number(t.amount),0);
   const byDate={};
-  for(const t of list){if(!byDate[t.date])byDate[t.date]=[];byDate[t.date].push(t);}
+  for(const t of list){ const d=cleanDate(t.date); if(!byDate[d]) byDate[d]=[]; byDate[d].push(t); }
   const dates=Object.keys(byDate).sort((a,b)=>b.localeCompare(a));
   const txHtml=dates.length===0
-    ?`<div class="empty-state"><div class="ei">📭</div><p>這個月還沒有記錄<br>點右下角 ＋ 開始記帳</p></div>`
+    ?`<div class="empty-state"><div class="empty-icon">📭</div><p>這個月還沒有記錄<br>點右下角 ＋ 開始記帳</p></div>`
     :dates.map(date=>{
         const rows=byDate[date].map(t=>{
           const cat=catById(t.category||'');
@@ -470,14 +447,19 @@ function renderTxs(){
           if(t.type==='xfr'){amt='↔ '+fmt(t.amount);cls='xfr';iconBg='var(--blue-l)';}
           else if(t.type==='inc'){amt='＋'+fmt(t.amount);cls='inc';iconBg='var(--green-l)';}
           else{amt='－'+fmt(t.amount);cls='exp';iconBg='var(--red-l)';}
-          const accLabel=t.type==='xfr'?`${esc(acc?.name||'?')} → ${esc(toAcc?.name||'?')}`:esc(acc?.name||'');
+          const accLabel=t.type==='xfr'
+            ?`${esc(acc?.name||'?')} → ${esc(toAcc?.name||'?')}`
+            :esc(acc?.name||'未知帳戶');
           return `<div class="tx-item" onclick="openTxDetail('${esc(t.id)}')">
             <div class="tx-cat-icon" style="background:${iconBg}">${t.type==='xfr'?'↔':cat.icon}</div>
-            <div class="tx-body"><div class="tx-desc">${esc(t.desc||(t.type==='xfr'?'轉帳':cat.name))}</div>
-            <div class="tx-meta">${t.type!=='xfr'?`<span>${cat.name}</span>`:''}
-              <span class="tx-acc-tag">${accLabel}</span>
-              ${t.userName?`<span>${esc(t.userName)}</span>`:''}
-            </div></div>
+            <div class="tx-body">
+              <div class="tx-desc">${esc(t.desc||(t.type==='xfr'?'轉帳':cat.name))}</div>
+              <div class="tx-meta">
+                ${t.type!=='xfr'?`<span>${cat.name}</span>`:''}
+                <span class="tx-acc-tag">${accLabel}</span>
+                ${t.userName?`<span>${esc(t.userName)}</span>`:''}
+              </div>
+            </div>
             <div class="tx-amt ${cls}">${amt}</div>
           </div>`;
         }).join('');
@@ -502,14 +484,16 @@ function renderTxs(){
     ${txHtml}
     <div class="fab" onclick="openTxModal()">＋</div>`;
 }
+
 function chMonth(d){
   S.txMonth+=d;
   if(S.txMonth>12){S.txMonth=1;S.txYear++;}
   if(S.txMonth<1){S.txMonth=12;S.txYear--;}
   renderTxs();
 }
-function setFilter(f){S.txFilter=f;renderTxs();}
+function setFilter(f){ S.txFilter=f; renderTxs(); }
 
+// ── 記帳詳情 ──────────────────────────────────────────
 function openTxDetail(id){
   const t=S.txs.find(x=>x.id===id); if(!t) return;
   const acc=S.accounts.find(a=>a.id===t.accountId);
@@ -517,9 +501,7 @@ function openTxDetail(id){
   const cat=catById(t.category||'');
   const typeLabel=t.type==='inc'?'收入':t.type==='exp'?'支出':'轉帳';
   const amtColor=t.type==='inc'?'var(--green)':t.type==='exp'?'var(--red)':'var(--text3)';
-  const dateStr=parseDate(t.date);
-  const bd=document.createElement('div'); bd.className='backdrop'; bd.id='tx-detail-bd';
-  bd.onclick=e=>{if(e.target===bd)bd.remove();};
+  const bd=mkBackdrop('tx-detail-bd');
   bd.innerHTML=`<div class="modal">
     <div class="modal-hdr"><h3>記帳詳情</h3>
       <button class="close-btn" onclick="document.getElementById('tx-detail-bd').remove()">✕</button></div>
@@ -528,14 +510,14 @@ function openTxDetail(id){
       <div style="font-size:13px;color:var(--text3);margin-bottom:4px">${typeLabel}${t.type!=='xfr'?' · '+cat.name:''}</div>
       <div style="font-size:28px;font-family:var(--mono);font-weight:500;color:${amtColor}">${fmt(t.amount)}</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;margin-bottom:18px">
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;margin-bottom:18px">
       <div style="display:flex;justify-content:space-between"><span style="color:var(--text3)">備註</span><span>${esc(t.desc||'—')}</span></div>
-      <div style="display:flex;justify-content:space-between"><span style="color:var(--text3)">日期</span><span>${dateStr}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text3)">日期</span><span>${cleanDate(t.date)}</span></div>
       <div style="display:flex;justify-content:space-between"><span style="color:var(--text3)">${t.type==='xfr'?'轉出':'帳戶'}</span><span>${esc(acc?.name||'—')}</span></div>
       ${toAcc?`<div style="display:flex;justify-content:space-between"><span style="color:var(--text3)">轉入</span><span>${esc(toAcc.name)}</span></div>`:''}
       ${t.userName?`<div style="display:flex;justify-content:space-between"><span style="color:var(--text3)">記帳者</span><span>${esc(t.userName)}</span></div>`:''}
     </div>
-    <button class="submit-btn" style="margin-bottom:8px" onclick="openEditTx('${esc(id)}')">編輯此筆</button>
+    <button class="submit-btn" style="margin-bottom:8px" onclick="openEditTx('${esc(id)}')">✏️ 編輯此筆</button>
     <button class="del-btn" onclick="deleteTx('${esc(id)}')">刪除此筆</button>
   </div>`;
   document.body.appendChild(bd);
@@ -545,14 +527,109 @@ function openEditTx(id){
   const t=S.txs.find(x=>x.id===id); if(!t) return;
   document.getElementById('tx-detail-bd')?.remove();
   _txType=t.type;
-  const bd=document.createElement('div'); bd.className='backdrop'; bd.id='tx-modal-bd';
-  bd.onclick=e=>{if(e.target===bd)bd.remove();};
+  const bd=mkBackdrop('tx-modal-bd');
   bd.innerHTML=buildTxHTML(t);
   document.body.appendChild(bd);
 }
 
-function buildEditButtons(id){
-  return `<button class="submit-btn" id="tx-submit" onclick="saveEditTx('${id}')">儲存修改</button>`;
+async function deleteTx(id){
+  if(!confirm('確定刪除？')) return;
+  try{
+    await deleteDoc(doc(db,'txs',id));
+    S.txs=S.txs.filter(t=>t.id!==id);
+    document.getElementById('tx-detail-bd')?.remove();
+    render(); showToast('已刪除');
+  }catch(e){ showToast('刪除失敗：'+e.message); }
+}
+
+// ── 新增/編輯記帳 modal ───────────────────────────────
+let _txType='exp';
+
+function openTxModal(){
+  if(S.accounts.length===0){ showToast('請先新增帳戶'); switchTab('assets'); return; }
+  _txType='exp';
+  const bd=mkBackdrop('tx-modal-bd');
+  bd.innerHTML=buildTxHTML(null);
+  document.body.appendChild(bd);
+  document.getElementById('tx-amount')?.focus();
+}
+
+function buildTxHTML(existing){
+  const isEdit=!!existing;
+  const accOpts=S.accounts.map(a=>
+    `<option value="${esc(a.id)}" ${a.id===(existing?.accountId||'')?'selected':''}>${esc(a.name)}</option>`
+  ).join('');
+  const accOptsTo=S.accounts.map(a=>
+    `<option value="${esc(a.id)}" ${a.id===(existing?.toAccountId||'')?'selected':''}>${esc(a.name)}</option>`
+  ).join('');
+  const cats=_txType==='inc'?CATS.income:CATS.expense;
+  const catBtns=cats.map((c,i)=>{
+    const sel=existing?c.id===existing.category:i===0;
+    return `<button class="cat-btn${sel?' sel':''}" data-id="${c.id}" onclick="selCat(this)">${c.icon}<span class="cn">${c.name}</span></button>`;
+  }).join('');
+  const dateVal=existing?cleanDate(existing.date):today();
+  const editId=existing?.id||'';
+  return `<div class="modal" id="tx-modal-inner">
+    <div class="modal-hdr"><h3>${isEdit?'編輯記帳':'新增記帳'}</h3>
+      <button class="close-btn" onclick="document.getElementById('tx-modal-bd').remove()">✕</button></div>
+    <div class="type-row">
+      <button class="type-btn${_txType==='exp'?' on-exp':''}" onclick="setTxType('exp','${editId}')">支出</button>
+      <button class="type-btn${_txType==='inc'?' on-inc':''}" onclick="setTxType('inc','${editId}')">收入</button>
+      <button class="type-btn${_txType==='xfr'?' on-xfr':''}" onclick="setTxType('xfr','${editId}')">轉帳</button>
+    </div>
+    <div class="fgrp"><label class="flabel">金額</label>
+      <input class="finput mono" id="tx-amount" type="number" inputmode="decimal" placeholder="0" value="${existing?.amount||''}"></div>
+    ${_txType!=='xfr'?`<div class="fgrp"><label class="flabel">分類</label><div class="cat-grid">${catBtns}</div></div>`:''}
+    <div class="fgrp"><label class="flabel">${_txType==='xfr'?'轉出帳戶':'帳戶'}</label>
+      <select class="finput" id="tx-acc">${accOpts}</select></div>
+    ${_txType==='xfr'?`<div class="fgrp"><label class="flabel">轉入帳戶</label>
+      <select class="finput" id="tx-acc-to">${accOptsTo}</select></div>`:''}
+    <div class="fgrp"><label class="flabel">備註（選填）</label>
+      <input class="finput" id="tx-desc" placeholder="可空白" value="${esc(existing?.desc||'')}"></div>
+    <div class="fgrp"><label class="flabel">日期</label>
+      <input class="finput" id="tx-date" type="date" value="${dateVal}"></div>
+    ${isEdit
+      ?`<button class="submit-btn" id="tx-submit" onclick="saveEditTx('${editId}')">儲存修改</button>`
+      :`<button class="submit-btn" id="tx-submit" onclick="saveTx()">記帳</button>`}
+  </div>`;
+}
+
+function setTxType(t, editId){
+  _txType=t;
+  const existing=editId?S.txs.find(x=>x.id===editId):null;
+  const inner=document.getElementById('tx-modal-inner');
+  if(inner) inner.outerHTML=buildTxHTML(existing||null);
+}
+function selCat(btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+async function saveTx(){
+  const amount=parseFloat(document.getElementById('tx-amount')?.value);
+  const accId=document.getElementById('tx-acc')?.value;
+  const toAccId=_txType==='xfr'?document.getElementById('tx-acc-to')?.value:null;
+  const desc=document.getElementById('tx-desc')?.value.trim();
+  const date=document.getElementById('tx-date')?.value;
+  const catId=document.querySelector('.cat-btn.sel')?.dataset.id||'other';
+  if(!amount||amount<=0){ showToast('請輸入金額'); return; }
+  if(!accId){ showToast('請選擇帳戶'); return; }
+  if(_txType==='xfr'&&toAccId===accId){ showToast('轉出和轉入帳戶不能相同'); return; }
+  if(!date){ showToast('請選擇日期'); return; }
+  const btn=document.getElementById('tx-submit'); if(btn) btn.disabled=true;
+  const data={
+    type:_txType, amount, accountId:accId,
+    toAccountId:toAccId||'', desc:desc||'', date,
+    category:_txType!=='xfr'?catId:'',
+    userId:S.user.id, userName:S.user.name, createdAt:Date.now()
+  };
+  try{
+    const ref=await addDoc(collection(db,'txs'),data);
+    S.txs.unshift({id:ref.id,...data});
+    S.txs.sort((a,b)=>cleanDate(b.date).localeCompare(cleanDate(a.date))||(b.createdAt||0)-(a.createdAt||0));
+    document.getElementById('tx-modal-bd')?.remove();
+    render(); showToast('記帳成功 ✓');
+  }catch(e){ showToast('失敗：'+e.message); if(btn) btn.disabled=false; }
 }
 
 async function saveEditTx(id){
@@ -562,167 +639,72 @@ async function saveEditTx(id){
   const desc=document.getElementById('tx-desc')?.value.trim();
   const date=document.getElementById('tx-date')?.value;
   const catId=document.querySelector('.cat-btn.sel')?.dataset.id||'other';
-  if(!amount||amount<=0){showToast('請輸入金額');return;}
-  if(!date){showToast('請選擇日期');return;}
+  if(!amount||amount<=0){ showToast('請輸入金額'); return; }
+  if(!date){ showToast('請選擇日期'); return; }
   const btn=document.getElementById('tx-submit'); if(btn) btn.disabled=true;
-  // Delete old and add new
-  const delRes=await apiPost({action:'deleteTx',id});
-  if(!delRes.success){showToast('更新失敗');if(btn)btn.disabled=false;return;}
   const t=S.txs.find(x=>x.id===id);
-  const newData={
-    id, type:_txType, amount, accountId:accId,
-    toAccountId:toAccId||'', desc, date,
+  const data={
+    type:_txType, amount, accountId:accId,
+    toAccountId:toAccId||'', desc:desc||'', date,
     category:_txType!=='xfr'?catId:'',
     userId:t?.userId||S.user.id, userName:t?.userName||S.user.name,
     createdAt:t?.createdAt||Date.now()
   };
-  const addRes=await apiPost({action:'addTx',data:newData});
-  if(addRes.success){
-    S.txs=S.txs.filter(x=>x.id!==id);
-    S.txs.unshift(newData);
-    S.txs.sort((a,b)=>String(b.date).localeCompare(String(a.date))||(Number(b.createdAt)||0)-(Number(a.createdAt)||0));
+  try{
+    await updateDoc(doc(db,'txs',id),data);
+    const idx=S.txs.findIndex(x=>x.id===id);
+    if(idx>=0) S.txs[idx]={id,...data};
+    S.txs.sort((a,b)=>cleanDate(b.date).localeCompare(cleanDate(a.date))||(b.createdAt||0)-(a.createdAt||0));
     document.getElementById('tx-modal-bd')?.remove();
     render(); showToast('已更新 ✓');
-  }else{showToast('更新失敗');if(btn)btn.disabled=false;}
+  }catch(e){ showToast('更新失敗：'+e.message); if(btn) btn.disabled=false; }
 }
 
-async function deleteTx(id){
-  if(!confirm('確定刪除？')) return;
-  const res=await apiPost({action:'deleteTx',id});
-  if(res.success){
-    S.txs=S.txs.filter(t=>t.id!==id);
-    document.getElementById('tx-detail-bd')?.remove();
-    render(); showToast('已刪除');
-  }else showToast('刪除失敗');
-}
-
-let _txType='exp';
-function openTxModal(){
-  if(S.accounts.length===0){showToast('請先新增帳戶');switchTab('assets');return;}
-  _txType='exp';
-  const bd=document.createElement('div'); bd.className='backdrop'; bd.id='tx-modal-bd';
-  bd.onclick=e=>{if(e.target===bd)bd.remove();};
-  bd.innerHTML=buildTxHTML();
-  document.body.appendChild(bd);
-  document.getElementById('tx-amount')?.focus();
-}
-function buildTxHTML(existing){
-  const isEdit=!!existing;
-  const accOpts=S.accounts.map(a=>`<option value="${esc(a.id)}" ${a.id===(existing?.accountId||'')?'selected':''}>${esc(a.name)}</option>`).join('');
-  const accOptsTo=S.accounts.map(a=>`<option value="${esc(a.id)}" ${a.id===(existing?.toAccountId||'')?'selected':''}>${esc(a.name)}</option>`).join('');
-  const cats=_txType==='inc'?CATS.income:CATS.expense;
-  const catBtns=cats.map((c,i)=>{
-    const sel=existing?c.id===existing.category:i===0;
-    return `<button class="cat-btn${sel?' sel':''}" data-id="${c.id}" onclick="selCat(this)">${c.icon}<span class="cat-name">${c.name}</span></button>`;
-  }).join('');
-  const dateVal=existing?parseDate(existing.date):today();
-  return `<div class="modal" id="tx-modal-inner">
-    <div class="modal-hdr"><h3>${isEdit?'編輯記帳':'新增記帳'}</h3>
-      <button class="close-btn" onclick="document.getElementById('tx-modal-bd').remove()">✕</button></div>
-    <div class="type-row">
-      <button class="type-btn${_txType==='exp'?' on-exp':''}" onclick="setTxType('exp',${isEdit?`'${existing?.id}'`:'null'})">支出</button>
-      <button class="type-btn${_txType==='inc'?' on-inc':''}" onclick="setTxType('inc',${isEdit?`'${existing?.id}'`:'null'})">收入</button>
-      <button class="type-btn${_txType==='xfr'?' on-xfr':''}" onclick="setTxType('xfr',${isEdit?`'${existing?.id}'`:'null'})">轉帳</button>
-    </div>
-    <div class="fgrp"><label class="flabel">金額</label>
-      <input class="finput mono" id="tx-amount" type="number" inputmode="decimal" placeholder="0" value="${existing?.amount||''}"></div>
-    ${_txType!=='xfr'?`<div class="fgrp"><label class="flabel">分類</label><div class="cat-grid" id="cat-grid">${catBtns}</div></div>`:''}
-    <div class="fgrp"><label class="flabel">${_txType==='xfr'?'轉出帳戶':'帳戶'}</label>
-      <select class="finput" id="tx-acc">${accOpts}</select></div>
-    ${_txType==='xfr'?`<div class="fgrp"><label class="flabel">轉入帳戶</label><select class="finput" id="tx-acc-to">${accOptsTo}</select></div>`:''}
-    <div class="fgrp"><label class="flabel">備註（選填）</label>
-      <input class="finput" id="tx-desc" placeholder="可空白" value="${esc(existing?.desc||'')}"></div>
-    <div class="fgrp"><label class="flabel">日期</label>
-      <input class="finput" id="tx-date" type="date" value="${dateVal}"></div>
-    ${isEdit
-      ? `<button class="submit-btn" id="tx-submit" onclick="saveEditTx('${existing.id}')">儲存修改</button>`
-      : `<button class="submit-btn" id="tx-submit" onclick="saveTx()">記帳</button>`
-    }
-  </div>`;
-}
-function setTxType(t, editId){
-  _txType=t;
-  const existing=editId?S.txs.find(x=>x.id===editId):null;
-  const inner=document.getElementById('tx-modal-inner');
-  if(inner) inner.outerHTML=buildTxHTML(existing||undefined);
-}
-function selCat(btn){
-  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');
-}
-async function saveTx(){
-  const amount=parseFloat(document.getElementById('tx-amount')?.value);
-  const accId=document.getElementById('tx-acc')?.value;
-  const toAccId=_txType==='xfr'?document.getElementById('tx-acc-to')?.value:null;
-  const desc=document.getElementById('tx-desc')?.value.trim();
-  const date=document.getElementById('tx-date')?.value;
-  const catId=document.querySelector('.cat-btn.sel')?.dataset.id||'other';
-  if(!amount||amount<=0){showToast('請輸入金額');return;}
-  if(!accId){showToast('請選擇帳戶');return;}
-  if(_txType==='xfr'&&toAccId===accId){showToast('轉出和轉入帳戶不能相同');return;}
-  if(!date){showToast('請選擇日期');return;}
-  const btn=document.getElementById('tx-submit'); if(btn) btn.disabled=true;
-  const data={
-    id:uuid(), type:_txType, amount, accountId:accId,
-    toAccountId:toAccId||'', desc, date,
-    category:_txType!=='xfr'?catId:'',
-    userId:S.user.id, userName:S.user.name, createdAt:Date.now()
-  };
-  const res=await apiPost({action:'addTx',data});
-  if(res.success){
-    S.txs.unshift(data);
-    S.txs.sort((a,b)=>String(b.date).localeCompare(String(a.date))||(Number(b.createdAt)||0)-(Number(a.createdAt)||0));
-    document.getElementById('tx-modal-bd')?.remove();
-    render(); showToast('記帳成功 ✓');
-  }else{ showToast('失敗：'+(res.error||'未知')); if(btn) btn.disabled=false; }
-}
-
-// ── stats tab ─────────────────────────────────────────
+// ── 統計頁 ────────────────────────────────────────────
 function renderStats(){
   const now=new Date();
   const isCurrent=S.txYear===now.getFullYear()&&S.txMonth===now.getMonth()+1;
   const mTxs=monthTxs();
   const expTxs=mTxs.filter(t=>t.type==='exp');
   const incTxs=mTxs.filter(t=>t.type==='inc');
-  const totalExp=expTxs.reduce((s,t)=>s+(parseFloat(t.amount)||0),0);
-  const totalInc=incTxs.reduce((s,t)=>s+(parseFloat(t.amount)||0),0);
+  const totalExp=expTxs.reduce((s,t)=>s+Number(t.amount),0);
+  const totalInc=incTxs.reduce((s,t)=>s+Number(t.amount),0);
   function groupByCat(txs,total){
     const map={};
-    for(const t of txs) map[t.category]=(map[t.category]||0)+(parseFloat(t.amount)||0);
+    for(const t of txs) map[t.category]=(map[t.category]||0)+Number(t.amount);
     return Object.entries(map).sort((a,b)=>b[1]-a[1]).map(([id,amt])=>({
-      cat:catById(id),amt,pct:total>0?Math.round(amt/total*100):0
+      cat:catById(id), amt, pct:total>0?Math.round(amt/total*100):0
     }));
   }
-  function catRows(groups,barColor){
+  function catRows(groups,color){
     if(!groups.length) return '<div style="color:var(--text3);font-size:13px;padding:8px 0">無資料</div>';
     return groups.map(g=>`
       <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">
         <span style="font-size:18px;width:24px;text-align:center">${g.cat.icon}</span>
         <span style="flex:1;font-size:13px">${g.cat.name}</span>
         <div style="width:72px;height:5px;background:var(--surface2);border-radius:99px;overflow:hidden">
-          <div style="width:${g.pct}%;height:100%;background:${barColor};border-radius:99px"></div>
+          <div style="width:${g.pct}%;height:100%;background:${color};border-radius:99px"></div>
         </div>
-        <span style="font-family:var(--mono);font-size:12px;color:var(--text2);width:72px;text-align:right">${fmt(g.amt)}</span>
+        <span style="font-family:var(--mono);font-size:12px;color:var(--text2);width:76px;text-align:right">${fmt(g.amt)}</span>
       </div>`).join('');
   }
   const bars=[];
   for(let i=5;i>=0;i--){
-    let y=S.txYear,m=S.txMonth-i;
-    while(m<1){m+=12;y--;}
+    let y=S.txYear,m=S.txMonth-i; while(m<1){m+=12;y--;}
     const mk2=monthKey(y,m);
-    const inc=S.txs.filter(t=>String(t.date).startsWith(mk2)&&t.type==='inc').reduce((s,t)=>s+(parseFloat(t.amount)||0),0);
-    const exp=S.txs.filter(t=>String(t.date).startsWith(mk2)&&t.type==='exp').reduce((s,t)=>s+(parseFloat(t.amount)||0),0);
+    const inc=S.txs.filter(t=>cleanDate(t.date).startsWith(mk2)&&t.type==='inc').reduce((s,t)=>s+Number(t.amount),0);
+    const exp=S.txs.filter(t=>cleanDate(t.date).startsWith(mk2)&&t.type==='exp').reduce((s,t)=>s+Number(t.amount),0);
     bars.push({label:`${m}月`,inc,exp,net:inc-exp});
   }
   const maxVal=Math.max(...bars.map(b=>Math.max(b.inc,b.exp)),1);
   const barHtml=bars.map(b=>{
-    const hi=Math.round(b.inc/maxVal*56); const he=Math.round(b.exp/maxVal*56);
+    const hi=Math.round(b.inc/maxVal*60); const he=Math.round(b.exp/maxVal*60);
     const nc=b.net>=0?'var(--green)':'var(--red)';
     return `<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">
-      <div style="font-family:var(--mono);font-size:10px;color:${nc}">${b.net>=0?'+':''}${b.net!==0?Math.abs(b.net)>=1000?Math.round(Math.abs(b.net)/1000)+'k':Math.round(Math.abs(b.net)/100)*100===0?'':'' : '0'}</div>
-      <div style="display:flex;align-items:flex-end;gap:2px;height:56px">
-        <div style="width:9px;background:var(--green);border-radius:3px 3px 0 0;height:${hi}px;opacity:.7"></div>
-        <div style="width:9px;background:var(--red);border-radius:3px 3px 0 0;height:${he}px;opacity:.7"></div>
+      <div style="font-size:9px;color:${nc};font-family:var(--mono)">${b.net!==0?(b.net>=0?'+':'-')+Math.round(Math.abs(b.net)/1000)+'k':''}</div>
+      <div style="display:flex;align-items:flex-end;gap:2px;height:60px">
+        <div style="width:10px;background:var(--green);border-radius:3px 3px 0 0;height:${hi}px;opacity:.75"></div>
+        <div style="width:10px;background:var(--red);border-radius:3px 3px 0 0;height:${he}px;opacity:.75"></div>
       </div>
       <div style="font-size:10px;color:var(--text3)">${b.label}</div>
     </div>`;
@@ -737,19 +719,36 @@ function renderStats(){
       <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:14px">近六個月收支</div>
       <div style="display:flex;gap:4px;align-items:flex-end">${barHtml}</div>
       <div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--text3)">
-        <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--green);opacity:.7;margin-right:4px"></span>收入</span>
-        <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--red);opacity:.7;margin-right:4px"></span>支出</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--green);opacity:.75;margin-right:4px"></span>收入</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--red);opacity:.75;margin-right:4px"></span>支出</span>
       </div>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px">
-      <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:2px">支出分類（共 ${fmt(totalExp)}）</div>
+      <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px">支出分類（共 ${fmt(totalExp)}）</div>
       ${catRows(groupByCat(expTxs,totalExp),'var(--red)')}
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px">
-      <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:2px">收入分類（共 ${fmt(totalInc)}）</div>
+      <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px">收入分類（共 ${fmt(totalInc)}）</div>
       ${catRows(groupByCat(incTxs,totalInc),'var(--green)')}
     </div>`;
 }
+
+// ── 工具函式 ──────────────────────────────────────────
+function mkBackdrop(id){
+  document.getElementById(id)?.remove();
+  const bd=document.createElement('div');
+  bd.className='backdrop'; bd.id=id;
+  bd.onclick=e=>{ if(e.target===bd) bd.remove(); };
+  return bd;
+}
+
+// 把函式掛到 window 讓 HTML onclick 可以呼叫
+Object.assign(window,{
+  switchTab,checkPw,submitName,
+  openAccModal,saveAcc,deleteAcc,openAccDetail,
+  openTxModal,openTxDetail,openEditTx,deleteTx,saveTx,saveEditTx,
+  setTxType,selCat,chMonth,setFilter,renderStats,
+});
 
 init();
 </script>
