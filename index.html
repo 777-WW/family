@@ -156,8 +156,8 @@ function showToast(msg){ const t=document.getElementById('toast'); t.textContent
 
 // ── API calls ─────────────────────────────────────────
 async function apiGet(params){
-  const url=API+'?'+new URLSearchParams(params);
-  const res=await fetch(url);
+  const url=API+'?'+new URLSearchParams({...params, _t: Date.now()});
+  const res=await fetch(url, {cache: 'no-store'});
   return res.json();
 }
 async function apiPost(data){
@@ -219,7 +219,7 @@ function monthTxs(){
 }
 
 // ── 密碼設定（改這裡）──────────────────────────────────
-const APP_PASSWORD = '2026';  // ← 改成你想要的密碼
+const APP_PASSWORD = 'family2024';  // ← 改成你想要的密碼
 
 // ── 登入畫面 ──────────────────────────────────────────
 function renderLogin(step){
