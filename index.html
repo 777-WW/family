@@ -237,6 +237,7 @@ function renderLogin(){
 function signIn(){
   // Simple auth: store name in localStorage (no OAuth needed for family use)
   const name=prompt('請輸入你的名字（全家共用，用來標示是誰記的帳）');
+  const APP_PASSWORD = '2026';
   if(!name||!name.trim()) return;
   const user={name:name.trim(), id: uuid()};
   localStorage.setItem('family_budget_user', JSON.stringify(user));
