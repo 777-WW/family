@@ -422,13 +422,15 @@ function openAccModal(id){
   const acc=id?S.accounts.find(a=>a.id===id):null;
   document.getElementById('acc-detail-bd')?.remove();
   const typeOpts=ACC_TYPES.map(t=>`<option value="${t.id}" ${acc?.type===t.id?'selected':''}>${t.icon} ${t.label}</option>`).join('');
+  _allowNeg=true; _padOpen=true;
+  setCalcValue(acc?accountBalance(acc.id):'');
   const balField=acc
     ?`<label class="flabel">目前餘額</label>
-      <input class="finput mono" id="an-bal" type="number" inputmode="decimal" value="${accountBalance(acc.id)}">
-      <div class="hint">輸入現在的實際餘額，會自動回推初始值；原本的記帳都不會變動。信用卡欠款請填負數。</div>`
+      ${calcFieldHTML()}
+      <div class="hint">輸入現在的實際餘額，會自動回推初始值；原本的記帳都不會變動。信用卡欠款請先按 − 再輸入數字。</div>`
     :`<label class="flabel">初始餘額（今天的實際餘額）</label>
-      <input class="finput mono" id="an-bal" type="number" inputmode="decimal" placeholder="0">
-      <div class="hint">之後所有收支都從這個數字開始累積。信用卡欠款請填負數。</div>`;
+      ${calcFieldHTML()}
+      <div class="hint">之後所有收支都從這個數字開始累積。信用卡欠款請先按 − 再輸入數字。</div>`;
   const bd=mkBackdrop('acc-modal-bd');
   bd.innerHTML=`<div class="modal">
     <div class="modal-hdr"><h3>${acc?'編輯帳戶':'新增帳戶'}</h3>
@@ -441,14 +443,16 @@ function openAccModal(id){
     <button class="submit-btn" id="acc-submit" onclick="saveAcc('${esc(id||'')}')">${acc?'儲存修改':'建立帳戶'}</button>
   </div>`;
   document.body.appendChild(bd);
+  updateCalc();
   if(!acc) document.getElementById('an-name').focus();
 }
 
 async function saveAcc(id){
   const name=document.getElementById('an-name')?.value.trim();
   const type=document.getElementById('an-type')?.value;
-  const v=parseFloat(document.getElementById('an-bal')?.value);
+  const v=calcEval(_amt);
   if(!name){ showToast('請輸入帳戶名稱'); return; }
+  if(isNaN(v)&&_amt&&_amt!=='-'){ showToast('算式有誤，請檢查餘額'); return; }
   const btn=document.getElementById('acc-submit'); if(btn) btn.disabled=true;
   try{
     if(id){
@@ -592,12 +596,14 @@ let _txType='exp';
 // ── 金額計算機 ─────────────────────────────────────────
 let _amt='';          // 算式字串，例如 "120+35×2"
 let _padOpen=true;
+let _allowNeg=false;  // 帳戶餘額可以是負數（信用卡欠款），記帳金額不行
 const OPS='+-×÷';
 function isOp(c){ return OPS.includes(c); }
 // 依先乘除後加減計算；結尾多出的運算符號會忽略
 function calcEval(expr){
-  const s=String(expr||'').replace(/[+\-×÷]+$/,'');
+  let s=String(expr||'').replace(/[+\-×÷]+$/,'');
   if(!s) return NaN;
+  if(s[0]==='-') s='0'+s;
   const parts=s.split(/([+\-×÷])/).filter(x=>x!=='');
   const nums=[parseFloat(parts[0])], ops=[];
   for(let i=1;i<parts.length;i+=2){
@@ -623,12 +629,15 @@ function calcPress(k){
     else{
       const r=calcEval(_amt);
       if(isNaN(r)){ showToast('算式有誤（不能除以 0）'); return; }
-      if(r<0){ showToast('結果是負數，請檢查算式'); return; }
+      if(r<0&&!_allowNeg){ showToast('結果是負數，請檢查算式'); return; }
       _amt=String(r);
     }
   }
   else if(isOp(k)){
-    if(!_amt) return;                         // 不能用符號開頭
+    if(!_amt||_amt==='-'){                    // 開頭只能是負號（且只限餘額欄位）
+      if(k==='-'&&_allowNeg) _amt='-';
+      updateCalc(); return;
+    }
     _amt=isOp(last)?_amt.slice(0,-1)+k:_amt+k; // 連按符號就替換
   }
   else if(k==='.'){
@@ -654,6 +663,17 @@ function updateCalc(){
 function toggleCalc(){
   _padOpen=!_padOpen;
   document.getElementById('calc-pad')?.classList.toggle('hide',!_padOpen);
+}
+function calcFieldHTML(){
+  return `<div class="calc-disp" onclick="toggleCalc()">
+        <div class="calc-expr" id="calc-expr"></div>
+        <div class="calc-res" id="calc-res"></div>
+      </div>
+      ${calcPadHTML()}`;
+}
+function setCalcValue(n){
+  const v=Number(n);
+  _amt=(n===''||n==null||isNaN(v))?'':String(Math.round(v*100)/100);
 }
 function calcPadHTML(){
   const b=(k,cls='')=>`<button type="button" class="ck ${cls}" onclick="calcPress('${k}')">${k==='-'?'−':k}</button>`;
@@ -700,6 +720,7 @@ function openEditTx(id){
 // v = 表單目前的值（新增時為 null）；editId = 編輯中的記錄 id（新增時為空字串）
 function buildTxHTML(v,editId){
   const isEdit=!!editId;
+  _allowNeg=false;
   _amt=(v&&v.amount!=null&&v.amount!=='')?String(v.amount):'';
   const fromId=v?.accountId||S.accounts[0]?.id||'';
   let toId=v?.toAccountId||'';
@@ -717,11 +738,7 @@ function buildTxHTML(v,editId){
       <button class="close-btn" onclick="document.getElementById('tx-modal-bd').remove()">✕</button></div>
     <div class="type-row">${tb('exp','支出')}${tb('inc','收入')}${tb('xfr','轉帳')}</div>
     <div class="fgrp"><label class="flabel">金額</label>
-      <div class="calc-disp" onclick="toggleCalc()">
-        <div class="calc-expr" id="calc-expr"></div>
-        <div class="calc-res" id="calc-res"></div>
-      </div>
-      ${calcPadHTML()}</div>
+      ${calcFieldHTML()}</div>
     ${_txType!=='xfr'?`<div class="fgrp"><label class="flabel">分類</label><div class="cat-grid">${catBtns}</div></div>`:''}
     <div class="fgrp"><label class="flabel">${_txType==='xfr'?'轉出帳戶':'帳戶'}</label>
       <select class="finput" id="tx-acc">${opts(fromId)}</select></div>
