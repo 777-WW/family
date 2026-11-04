@@ -104,6 +104,17 @@ main{max-width:600px;margin:0 auto;padding:20px 16px calc(72px + env(safe-area-i
 .del-btn:hover{background:var(--red-l)}
 .ghost-btn{width:100%;padding:11px;border-radius:9px;background:transparent;color:var(--text2);font-size:14px;font-weight:600;border:1.5px solid var(--border);cursor:pointer;margin-top:7px}
 .hint{font-size:12px;color:var(--text3);margin-top:4px}
+.calc-disp{border:1.5px solid var(--blue);border-radius:8px;padding:8px 13px;background:var(--surface);text-align:right;cursor:pointer;min-height:58px;display:flex;flex-direction:column;justify-content:center}
+.calc-expr{font-family:var(--mono);font-size:22px;font-weight:500;word-break:break-all;line-height:1.3}
+.calc-expr.ph{color:var(--text3)}
+.calc-res{font-family:var(--mono);font-size:13px;color:var(--text3);min-height:17px;line-height:1.3}
+.calc-pad{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.calc-pad.hide{display:none}
+.ck{height:46px;border-radius:9px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--mono);font-size:19px;font-weight:500;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.ck:active{filter:brightness(.92)}
+.ck.op{background:var(--blue-l);color:var(--blue);border-color:transparent;font-size:21px}
+.ck.fn{color:var(--text2);font-family:var(--sans);font-size:15px}
+.ck.eq{background:var(--blue);color:#fff;border-color:transparent}
 .loading{text-align:center;padding:60px;color:var(--text3);font-size:14px}
 .toast{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#1C1C1C;color:#fff;padding:10px 20px;border-radius:99px;font-size:13px;z-index:999;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
 .toast.show{opacity:1}
@@ -578,27 +589,118 @@ async function deleteTx(id){
 // ── 新增/編輯記帳 modal ───────────────────────────────
 let _txType='exp';
 
+// ── 金額計算機 ─────────────────────────────────────────
+let _amt='';          // 算式字串，例如 "120+35×2"
+let _padOpen=true;
+const OPS='+-×÷';
+function isOp(c){ return OPS.includes(c); }
+// 依先乘除後加減計算；結尾多出的運算符號會忽略
+function calcEval(expr){
+  const s=String(expr||'').replace(/[+\-×÷]+$/,'');
+  if(!s) return NaN;
+  const parts=s.split(/([+\-×÷])/).filter(x=>x!=='');
+  const nums=[parseFloat(parts[0])], ops=[];
+  for(let i=1;i<parts.length;i+=2){
+    const op=parts[i], n=parseFloat(parts[i+1]);
+    if(isNaN(n)) return NaN;
+    const k=nums.length-1;
+    if(op==='×') nums[k]*=n;
+    else if(op==='÷'){ if(n===0) return NaN; nums[k]/=n; }
+    else { ops.push(op); nums.push(n); }
+  }
+  let r=nums[0];
+  ops.forEach((op,i)=>{ r=op==='+'?r+nums[i+1]:r-nums[i+1]; });
+  return isFinite(r)?Math.round(r*100)/100:NaN;
+}
+function fmtNum(n){ return Number(n).toLocaleString('zh-TW',{maximumFractionDigits:2}); }
+function calcPress(k){
+  const last=_amt.slice(-1);
+  const curNum=_amt.split(/[+\-×÷]/).pop();
+  if(k==='C'){ _amt=''; }
+  else if(k==='⌫'){ _amt=_amt.slice(0,-1); }
+  else if(k==='='){
+    if(!/[+\-×÷]/.test(_amt.replace(/[+\-×÷]+$/,''))){ _amt=_amt.replace(/[+\-×÷]+$/,''); }
+    else{
+      const r=calcEval(_amt);
+      if(isNaN(r)){ showToast('算式有誤（不能除以 0）'); return; }
+      if(r<0){ showToast('結果是負數，請檢查算式'); return; }
+      _amt=String(r);
+    }
+  }
+  else if(isOp(k)){
+    if(!_amt) return;                         // 不能用符號開頭
+    _amt=isOp(last)?_amt.slice(0,-1)+k:_amt+k; // 連按符號就替換
+  }
+  else if(k==='.'){
+    if(curNum.includes('.')) return;
+    _amt+=(curNum===''?'0.':'.');
+  }
+  else{ // 數字
+    if(_amt.length>=40) return;
+    if(curNum==='0'&&k!=='.') _amt=_amt.slice(0,-1)+k; // 避免 007
+    else _amt+=k;
+  }
+  updateCalc();
+}
+function updateCalc(){
+  const ex=document.getElementById('calc-expr'), rs=document.getElementById('calc-res');
+  if(!ex) return;
+  ex.textContent=(_amt||'0').replace(/-/g,'−');
+  ex.classList.toggle('ph',!_amt);
+  const hasOp=/[+\-×÷]/.test(_amt.replace(/[+\-×÷]+$/,''));
+  const r=calcEval(_amt);
+  rs.textContent=hasOp?(isNaN(r)?'= ?':'= '+fmtNum(r)):'';
+}
+function toggleCalc(){
+  _padOpen=!_padOpen;
+  document.getElementById('calc-pad')?.classList.toggle('hide',!_padOpen);
+}
+function calcPadHTML(){
+  const b=(k,cls='')=>`<button type="button" class="ck ${cls}" onclick="calcPress('${k}')">${k==='-'?'−':k}</button>`;
+  return `<div class="calc-pad${_padOpen?'':' hide'}" id="calc-pad">
+    ${b('C','fn')}${b('⌫','fn')}${b('÷','op')}${b('×','op')}
+    ${b('7')}${b('8')}${b('9')}${b('-','op')}
+    ${b('4')}${b('5')}${b('6')}${b('+','op')}
+    ${b('1')}${b('2')}${b('3')}${b('=','eq')}
+    <button type="button" class="ck" style="grid-column:span 2" onclick="calcPress('0')">0</button>${b('.')}
+    <button type="button" class="ck fn" onclick="toggleCalc()">收起</button>
+  </div>`;
+}
+// 電腦鍵盤也能輸入（游標不在其他輸入框時）
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('calc-expr')) return;
+  const ae=document.activeElement;
+  if(ae&&['INPUT','SELECT','TEXTAREA'].includes(ae.tagName)) return;
+  const map={'*':'×','x':'×','/':'÷','Enter':'=','Backspace':'⌫','Escape':'C','Delete':'C'};
+  const k=map[e.key]||e.key;
+  if(/^[0-9.]$/.test(k)||isOp(k)||k==='='||k==='⌫'||k==='C'){
+    e.preventDefault(); calcPress(k);
+  }
+});
+
 function openTxModal(){
   if(S.accounts.length===0){ showToast('請先新增帳戶'); switchTab('assets'); return; }
-  _txType='exp';
+  _txType='exp'; _padOpen=true;
   const bd=mkBackdrop('tx-modal-bd');
   bd.innerHTML=buildTxHTML(null,'');
   document.body.appendChild(bd);
-  document.getElementById('tx-amount')?.focus();
+  updateCalc();
 }
 
 function openEditTx(id){
   const t=S.txs.find(x=>x.id===id); if(!t) return;
   document.getElementById('tx-detail-bd')?.remove();
-  _txType=t.type;
+  _txType=t.type; _padOpen=false;
   const bd=mkBackdrop('tx-modal-bd');
   bd.innerHTML=buildTxHTML({...t,category:normCatId(t)},id);
   document.body.appendChild(bd);
+  updateCalc();
 }
 
 // v = 表單目前的值（新增時為 null）；editId = 編輯中的記錄 id（新增時為空字串）
 function buildTxHTML(v,editId){
   const isEdit=!!editId;
+  _amt=(v&&v.amount!=null&&v.amount!=='')?String(v.amount):'';
   const fromId=v?.accountId||S.accounts[0]?.id||'';
   let toId=v?.toAccountId||'';
   if(!toId||toId===fromId) toId=(S.accounts.find(a=>a.id!==fromId)||S.accounts[0])?.id||'';
@@ -615,7 +717,11 @@ function buildTxHTML(v,editId){
       <button class="close-btn" onclick="document.getElementById('tx-modal-bd').remove()">✕</button></div>
     <div class="type-row">${tb('exp','支出')}${tb('inc','收入')}${tb('xfr','轉帳')}</div>
     <div class="fgrp"><label class="flabel">金額</label>
-      <input class="finput mono" id="tx-amount" type="number" inputmode="decimal" placeholder="0" value="${esc(v?.amount??'')}"></div>
+      <div class="calc-disp" onclick="toggleCalc()">
+        <div class="calc-expr" id="calc-expr"></div>
+        <div class="calc-res" id="calc-res"></div>
+      </div>
+      ${calcPadHTML()}</div>
     ${_txType!=='xfr'?`<div class="fgrp"><label class="flabel">分類</label><div class="cat-grid">${catBtns}</div></div>`:''}
     <div class="fgrp"><label class="flabel">${_txType==='xfr'?'轉出帳戶':'帳戶'}</label>
       <select class="finput" id="tx-acc">${opts(fromId)}</select></div>
@@ -632,7 +738,7 @@ function buildTxHTML(v,editId){
 function readTxForm(){
   const g=id=>document.getElementById(id);
   const f={
-    amount:g('tx-amount')?.value??'',
+    amount:_amt,
     accountId:g('tx-acc')?.value||'',
     desc:g('tx-desc')?.value??'',
     date:g('tx-date')?.value||'',
@@ -648,6 +754,7 @@ function setTxType(t,editId){
   _txType=t;
   const inner=document.getElementById('tx-modal-inner');
   if(inner) inner.outerHTML=buildTxHTML(cur,editId);
+  updateCalc();
 }
 function selCat(btn){
   document.querySelectorAll('#tx-modal-inner .cat-btn').forEach(b=>b.classList.remove('sel'));
@@ -656,7 +763,8 @@ function selCat(btn){
 
 async function saveTx(editId){
   const f=readTxForm();
-  const amount=parseFloat(f.amount);
+  const amount=calcEval(f.amount);
+  if(isNaN(amount)&&f.amount){ showToast('算式有誤，請檢查金額'); return; }
   const accId=f.accountId;
   const toAccId=_txType==='xfr'?(f.toAccountId||''):'';
   if(!amount||amount<=0){ showToast('請輸入金額'); return; }
@@ -768,7 +876,7 @@ Object.assign(window,{
   switchTab,login,logout,
   openAccModal,saveAcc,deleteAcc,openAccDetail,
   openTxModal,openTxDetail,openEditTx,deleteTx,saveTx,
-  setTxType,selCat,chMonth,setFilter,
+  setTxType,selCat,chMonth,setFilter,calcPress,toggleCalc,
 });
 </script>
 </body>
