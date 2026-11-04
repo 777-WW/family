@@ -10,14 +10,14 @@
   --bg:#F2F4F7;--surface:#FFF;--surface2:#EAEDF2;--border:#D8DCE6;
   --text:#181C26;--text2:#5A607A;--text3:#9AA0B8;
   --blue:#2D5BE3;--blue-l:#EBF0FD;--green:#1B8A5A;--green-l:#E6F4EE;
-  --red:#C0392B;--red-l:#FDECEA;--mono:'IBM Plex Mono',monospace;
+  --red:#C0392B;--red-l:#FDECEA;--stk:#7B3FA8;--stk-l:#F3E8FA;--mono:'IBM Plex Mono',monospace;
   --sans:'Noto Sans TC',sans-serif;--r:12px;
 }
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#13151C;--surface:#1E2130;--surface2:#252A3A;--border:#2E3450;
   --text:#E8EAF2;--text2:#8890B0;--text3:#4A5070;
   --blue:#5B82F5;--blue-l:#1A2448;--green:#2AB87A;--green-l:#122B20;
-  --red:#E05A47;--red-l:#2E1510;
+  --red:#E05A47;--red-l:#2E1510;--stk:#B98AE0;--stk-l:#2A1C36;
 }}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.6}
@@ -59,10 +59,14 @@ main{max-width:600px;margin:0 auto;padding:20px 16px calc(72px + env(safe-area-i
 .scard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;text-align:left}
 .scard-label{font-size:11px;color:var(--text3);font-weight:500;margin-bottom:2px}
 .scard-val{font-size:19px;font-family:var(--mono);font-weight:500}
-.scard-val.inc{color:var(--green)}.scard-val.exp{color:var(--red)}
+.scard-val.inc{color:var(--green)}.scard-val.exp{color:var(--red)}.scard-val.stk{color:var(--stk)}
+.three{grid-template-columns:repeat(3,1fr)!important}
+.three .scard{padding:10px}
+.three .scard-val{font-size:15px;overflow-wrap:anywhere}
 .ftabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
 .ftab{padding:5px 12px;border-radius:99px;font-size:13px;font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .12s}
 .ftab.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.ftab.stk.active{background:var(--stk);border-color:var(--stk)}
 .tx-group{margin-bottom:16px}
 .tx-date-hdr{font-size:12px;color:var(--text3);font-weight:600;padding:4px 0 6px}
 .tx-item{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:11px 13px;display:flex;align-items:center;gap:11px;margin-bottom:3px;cursor:pointer;transition:background .1s}
@@ -72,7 +76,7 @@ main{max-width:600px;margin:0 auto;padding:20px 16px calc(72px + env(safe-area-i
 .tx-meta{font-size:11px;color:var(--text3);display:flex;gap:5px;align-items:center;margin-top:1px;flex-wrap:wrap}
 .tx-acc-tag{background:var(--surface2);border-radius:99px;padding:1px 7px;font-size:11px;font-weight:500}
 .tx-amt{font-family:var(--mono);font-size:14px;font-weight:500;white-space:nowrap;text-align:right}
-.tx-amt.inc{color:var(--green)}.tx-amt.exp{color:var(--red)}.tx-amt.xfr{color:var(--text3)}
+.tx-amt.inc{color:var(--green)}.tx-amt.exp{color:var(--red)}.tx-amt.xfr{color:var(--text3)}.tx-amt.stk{color:var(--stk)}
 .empty-state{text-align:center;padding:48px 16px;color:var(--text3)}
 .empty-icon{font-size:36px;margin-bottom:10px}
 .fab{position:fixed;bottom:calc(68px + env(safe-area-inset-bottom,0px));right:18px;width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(45,91,227,.35);cursor:pointer;z-index:50;transition:transform .1s}
@@ -89,6 +93,15 @@ main{max-width:600px;margin:0 auto;padding:20px 16px calc(72px + env(safe-area-i
 .type-btn.on-inc{background:var(--green-l);border-color:var(--green);color:var(--green)}
 .type-btn.on-exp{background:var(--red-l);border-color:var(--red);color:var(--red)}
 .type-btn.on-xfr{background:var(--blue-l);border-color:var(--blue);color:var(--blue)}
+.type-btn.on-stk{background:var(--stk-l);border-color:var(--stk);color:var(--stk)}
+.stk-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.stk-btn{border-radius:9px;background:var(--surface2);border:1.5px solid var(--border);cursor:pointer;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:20px;color:var(--text);font-family:var(--sans)}
+.stk-btn .cn{font-size:13px;font-weight:600;color:var(--text2)}
+.stk-btn.sel{border-color:var(--stk);background:var(--stk-l);box-shadow:0 0 0 2px var(--stk)}
+.stk-btn.sel .cn{color:var(--stk)}
+.stk-hint{font-size:12px;color:var(--stk);background:var(--stk-l);border-radius:8px;padding:7px 10px;margin-top:8px}
+.notice{background:var(--surface2);border-radius:9px;padding:14px;font-size:13px;color:var(--text2);text-align:center;margin-bottom:14px}
+.notice button{margin-top:10px;padding:8px 16px;border-radius:8px;border:none;background:var(--stk);color:#fff;font-weight:600;font-size:13px;cursor:pointer}
 .fgrp{margin-bottom:14px}
 .flabel{font-size:12px;font-weight:600;color:var(--text2);display:block;margin-bottom:5px}
 .finput{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:15px;outline:none;transition:border-color .12s}
@@ -196,7 +209,7 @@ const CATS={
   ],
   income:[
     {id:'salary',icon:'💼',name:'薪水'},{id:'bonus',icon:'🎁',name:'獎金'},
-    {id:'invest',icon:'📈',name:'投資'},{id:'side',icon:'🛠️',name:'兼職'},
+    {id:'invest',icon:'💰',name:'股利/投資'},{id:'side',icon:'🛠️',name:'兼職'},
     {id:'gift',icon:'🧧',name:'紅包'},{id:'other_i',icon:'✨',name:'其他'},
   ]
 };
@@ -215,10 +228,39 @@ const ACC_TYPES=[
   {id:'bank',icon:'🏦',label:'銀行帳戶',bg:'#EBF0FD'},
   {id:'cash',icon:'💵',label:'現金',bg:'#E6F4EE'},
   {id:'card',icon:'💳',label:'信用卡',bg:'#FFF3E0'},
-  {id:'invest',icon:'📈',label:'投資帳戶',bg:'#F3E5F5'},
+  {id:'invest',icon:'📈',label:'股票帳戶',bg:'#F3E5F5'},
+  {id:'reserve',icon:'🐷',label:'買股預備金',bg:'#FCE4EC'},
   {id:'other',icon:'📂',label:'其他',bg:'#EAEDF2'},
 ];
-function accTypeById(id){ return ACC_TYPES.find(t=>t.id===id)||ACC_TYPES[4]; }
+function accTypeById(id){ return ACC_TYPES.find(t=>t.id===id)||ACC_TYPES.find(t=>t.id==='other'); }
+
+// ── 股票 ──────────────────────────────────────────────
+// 買股、賣股存成「轉帳」（不算收支），領股利存成「收入」；用 stock 欄位標記
+const STK={
+  buy: {icon:'📈',name:'買股票',hint:'錢從扣款帳戶轉進股票帳戶，不算支出'},
+  sell:{icon:'💵',name:'賣股票',hint:'賣出的錢從股票帳戶回到銀行，不算收入'},
+  div: {icon:'💰',name:'領股利',hint:'股利入帳，會算進收入'},
+};
+function isStockAcc(a){ return a?.type==='invest'; }
+function stockAccs(){ return S.accounts.filter(isStockAcc); }
+function cashAccs(){ return S.accounts.filter(a=>!isStockAcc(a)); }
+function sumAmt(list){ return list.reduce((s,t)=>s+(Number(t.amount)||0),0); }
+// 每筆記錄的顯示方式（圖示、名稱、顏色、帳戶）
+function txInfo(t){
+  const acc=S.accounts.find(a=>a.id===t.accountId);
+  const toAcc=t.toAccountId?S.accounts.find(a=>a.id===t.toAccountId):null;
+  const an=a=>esc(a?.name||'未知帳戶');
+  const k=t.stock&&STK[t.stock];
+  if(k&&t.stock==='div') return {icon:k.icon,kind:k.name,title:t.desc||k.name,bg:'var(--stk-l)',cls:'inc',sign:'＋',color:'var(--green)',accLabel:an(acc),
+    rows:[['入帳帳戶',an(acc)]]};
+  if(k) return {icon:k.icon,kind:k.name,title:t.desc||k.name,bg:'var(--stk-l)',cls:'stk',sign:'',color:'var(--stk)',accLabel:`${an(acc)} → ${an(toAcc)}`,
+    rows:t.stock==='buy'?[['扣款帳戶',an(acc)],['股票帳戶',an(toAcc)]]:[['股票帳戶',an(acc)],['入帳帳戶',an(toAcc)]]};
+  if(t.type==='xfr') return {icon:'↔',kind:'轉帳',title:t.desc||'轉帳',bg:'var(--blue-l)',cls:'xfr',sign:'↔ ',color:'var(--text3)',accLabel:`${an(acc)} → ${an(toAcc)}`,
+    rows:[['轉出',an(acc)],['轉入',an(toAcc)]]};
+  const cat=catOf(t);
+  if(t.type==='inc') return {icon:cat.icon,kind:'收入 · '+cat.name,catName:cat.name,title:t.desc||cat.name,bg:'var(--green-l)',cls:'inc',sign:'＋',color:'var(--green)',accLabel:an(acc),rows:[['帳戶',an(acc)]]};
+  return {icon:cat.icon,kind:'支出 · '+cat.name,catName:cat.name,title:t.desc||cat.name,bg:'var(--red-l)',cls:'exp',sign:'－',color:'var(--red)',accLabel:an(acc),rows:[['帳戶',an(acc)]]};
+}
 
 // ── state ─────────────────────────────────────────────
 const S={
@@ -351,31 +393,33 @@ function render(){
 
 // ── 資產頁 ────────────────────────────────────────────
 function renderAssets(){
-  let pos=0, neg=0;
+  let cash=0, stock=0, debt=0;
   const accCards=S.accounts.map(a=>{
     const bal=accountBalance(a.id); const at=accTypeById(a.type);
-    if(bal>=0) pos+=bal; else neg+=bal;
+    if(isStockAcc(a)) stock+=bal; else if(bal>=0) cash+=bal; else debt+=bal;
     return `<div class="acc-card" onclick="openAccDetail('${esc(a.id)}')">
       <div class="acc-icon" style="background:${at.bg}">${at.icon}</div>
-      <div class="acc-info"><div class="acc-name">${esc(a.name)}</div><div class="acc-type">${at.label}</div></div>
+      <div class="acc-info"><div class="acc-name">${esc(a.name)}</div><div class="acc-type">${at.label}${isStockAcc(a)?' · 投入金額':''}</div></div>
       <div class="acc-bal ${bal<0?'neg':''}">${sfmt(bal)}</div>
     </div>`;
   }).join('');
-  const net=pos+neg;
+  const net=cash+debt;   // 淨資產不含股票成本，股票另外顯示
   const mk=monthKey(new Date().getFullYear(),new Date().getMonth()+1);
   const mTxs=S.txs.filter(t=>cleanDate(t.date).startsWith(mk));
-  const mInc=mTxs.filter(t=>t.type==='inc').reduce((s,t)=>s+Number(t.amount),0);
-  const mExp=mTxs.filter(t=>t.type==='exp').reduce((s,t)=>s+Number(t.amount),0);
+  const mInc=sumAmt(mTxs.filter(t=>t.type==='inc'));
+  const mExp=sumAmt(mTxs.filter(t=>t.type==='exp'));
+  const mBuy=sumAmt(mTxs.filter(t=>t.stock==='buy'));
   const mNet=mInc-mExp;
   document.getElementById('main').innerHTML=`
     <div class="asset-hero">
-      <div class="asset-label">淨資產</div>
+      <div class="asset-label">淨資產（不含股票）</div>
       <div class="asset-total ${net<0?'neg':''}">${sfmt(net)}</div>
-      <div class="asset-split">
-        <div class="scard"><div class="scard-label">資產</div><div class="scard-val inc">${fmt(pos)}</div></div>
-        <div class="scard"><div class="scard-label">負債</div><div class="scard-val exp">${fmt(neg)}</div></div>
+      <div class="asset-split three">
+        <div class="scard"><div class="scard-label">現金存款</div><div class="scard-val inc">${fmt(cash)}</div></div>
+        <div class="scard"><div class="scard-label">負債</div><div class="scard-val exp">${fmt(debt)}</div></div>
+        <div class="scard" style="border-style:dashed"><div class="scard-label">股票（另計）</div><div class="scard-val stk">${sfmt(stock)}</div></div>
       </div>
-      <div class="asset-delta">本月 <span class="${mNet>=0?'up':'dn'}">${mNet>=0?'+':'-'}${fmt(mNet)}</span>（收 ${fmt(mInc)}，支 ${fmt(mExp)}）</div>
+      <div class="asset-delta">本月 <span class="${mNet>=0?'up':'dn'}">${mNet>=0?'+':'-'}${fmt(mNet)}</span>（收 ${fmt(mInc)}，支 ${fmt(mExp)}）${mBuy?`<br>本月買股 <span style="color:var(--stk)">${fmt(mBuy)}</span>`:''}</div>
     </div>
     <div class="sec-hdr"><span class="sec-title">帳戶</span></div>
     <div class="accs">${accCards}<button class="add-btn" onclick="openAccModal()">＋ 新增帳戶</button></div>`;
@@ -392,11 +436,11 @@ function openAccDetail(id){
         const isXfrOut=t.type==='xfr'&&t.accountId===id;
         const cls=t.type==='xfr'?(isXfrOut?'exp':'inc'):(t.type==='inc'?'inc':'exp');
         const amt=(t.type==='xfr'?(isXfrOut?'－':'＋'):(t.type==='inc'?'＋':'－'))+fmt(t.amount);
-        const cat=catOf(t);
+        const info=txInfo(t);
         return `<div class="tx-item" style="cursor:default">
-          <div class="tx-cat-icon" style="background:${t.type==='inc'?'var(--green-l)':t.type==='xfr'?'var(--blue-l)':'var(--red-l)'}">${t.type==='xfr'?'↔':cat.icon}</div>
-          <div class="tx-body"><div class="tx-desc">${esc(t.desc||(t.type==='xfr'?'轉帳':cat.name))}</div>
-          <div class="tx-meta"><span>${cleanDate(t.date)}</span></div></div>
+          <div class="tx-cat-icon" style="background:${info.bg}">${info.icon}</div>
+          <div class="tx-body"><div class="tx-desc">${esc(info.title)}</div>
+          <div class="tx-meta"><span>${cleanDate(t.date)}</span>${t.stock&&t.desc?`<span>${info.kind}</span>`:''}</div></div>
           <div class="tx-amt ${cls}">${amt}</div>
         </div>`;
       }).join('');
@@ -418,10 +462,12 @@ function openAccDetail(id){
 }
 
 // 新增 / 編輯帳戶（同一個表單）
-function openAccModal(id){
+function openAccModal(id,presetType){
   const acc=id?S.accounts.find(a=>a.id===id):null;
   document.getElementById('acc-detail-bd')?.remove();
-  const typeOpts=ACC_TYPES.map(t=>`<option value="${t.id}" ${acc?.type===t.id?'selected':''}>${t.icon} ${t.label}</option>`).join('');
+  document.getElementById('tx-modal-bd')?.remove();
+  const selType=acc?.type||presetType||'bank';
+  const typeOpts=ACC_TYPES.map(t=>`<option value="${t.id}" ${selType===t.id?'selected':''}>${t.icon} ${t.label}</option>`).join('');
   _allowNeg=true; _padOpen=true;
   setCalcValue(acc?accountBalance(acc.id):'');
   const balField=acc
@@ -436,7 +482,7 @@ function openAccModal(id){
     <div class="modal-hdr"><h3>${acc?'編輯帳戶':'新增帳戶'}</h3>
       <button class="close-btn" onclick="document.getElementById('acc-modal-bd').remove()">✕</button></div>
     <div class="fgrp"><label class="flabel">帳戶名稱</label>
-      <input class="finput" id="an-name" placeholder="玉山銀行、現金錢包…" value="${esc(acc?.name||'')}"></div>
+      <input class="finput" id="an-name" placeholder="玉山銀行、現金錢包…" value="${esc(acc?.name||(presetType==='invest'?'股票':''))}"></div>
     <div class="fgrp"><label class="flabel">類型</label>
       <select class="finput" id="an-type">${typeOpts}</select></div>
     <div class="fgrp">${balField}</div>
@@ -493,11 +539,18 @@ function monthBar(){
       <button class="icon-btn" onclick="chMonth(1)" ${isCurrentMonth()?'disabled':''}>›</button>
     </div>`;
 }
+function txMatch(t,f){
+  if(f==='all') return true;
+  if(f==='stk') return !!t.stock;
+  if(f==='xfr') return t.type==='xfr'&&!t.stock;
+  return t.type===f;
+}
 function renderTxs(){
   const all=monthTxs();
-  const list=S.txFilter==='all'?all:all.filter(t=>t.type===S.txFilter);
-  const allInc=all.filter(t=>t.type==='inc').reduce((s,t)=>s+Number(t.amount),0);
-  const allExp=all.filter(t=>t.type==='exp').reduce((s,t)=>s+Number(t.amount),0);
+  const list=all.filter(t=>txMatch(t,S.txFilter));
+  const allInc=sumAmt(all.filter(t=>t.type==='inc'));
+  const allExp=sumAmt(all.filter(t=>t.type==='exp'));
+  const allBuy=sumAmt(all.filter(t=>t.stock==='buy'));
   const byDate={};
   for(const t of list){ const d=cleanDate(t.date); (byDate[d]=byDate[d]||[]).push(t); }
   const dates=Object.keys(byDate).sort((a,b)=>b.localeCompare(a));
@@ -505,39 +558,31 @@ function renderTxs(){
     ?`<div class="empty-state"><div class="empty-icon">📭</div><p>這個月還沒有記錄<br>點右下角 ＋ 開始記帳</p></div>`
     :dates.map(date=>{
         const rows=byDate[date].map(t=>{
-          const cat=catOf(t);
-          const acc=S.accounts.find(a=>a.id===t.accountId);
-          const toAcc=t.toAccountId?S.accounts.find(a=>a.id===t.toAccountId):null;
-          let amt,cls,iconBg;
-          if(t.type==='xfr'){amt='↔ '+fmt(t.amount);cls='xfr';iconBg='var(--blue-l)';}
-          else if(t.type==='inc'){amt='＋'+fmt(t.amount);cls='inc';iconBg='var(--green-l)';}
-          else{amt='－'+fmt(t.amount);cls='exp';iconBg='var(--red-l)';}
-          const accLabel=t.type==='xfr'
-            ?`${esc(acc?.name||'?')} → ${esc(toAcc?.name||'?')}`
-            :esc(acc?.name||'未知帳戶');
+          const info=txInfo(t);
           return `<div class="tx-item" onclick="openTxDetail('${esc(t.id)}')">
-            <div class="tx-cat-icon" style="background:${iconBg}">${t.type==='xfr'?'↔':cat.icon}</div>
+            <div class="tx-cat-icon" style="background:${info.bg}">${info.icon}</div>
             <div class="tx-body">
-              <div class="tx-desc">${esc(t.desc||(t.type==='xfr'?'轉帳':cat.name))}</div>
+              <div class="tx-desc">${esc(info.title)}</div>
               <div class="tx-meta">
-                ${t.type!=='xfr'?`<span>${cat.name}</span>`:''}
-                <span class="tx-acc-tag">${accLabel}</span>
+                ${t.stock?(t.desc?`<span style="color:var(--stk)">${info.kind}</span>`:''):(info.catName?`<span>${info.catName}</span>`:'')}
+                <span class="tx-acc-tag">${info.accLabel}</span>
                 ${t.userName?`<span>${esc(t.userName)}</span>`:''}
               </div>
             </div>
-            <div class="tx-amt ${cls}">${amt}</div>
+            <div class="tx-amt ${info.cls}">${info.sign}${fmt(t.amount)}</div>
           </div>`;
         }).join('');
         return `<div class="tx-group"><div class="tx-date-hdr">${fmtDateLabel(date)}</div>${rows}</div>`;
       }).join('');
-  const ft=(k,l)=>`<div class="ftab ${S.txFilter===k?'active':''}" onclick="setFilter('${k}')">${l}</div>`;
+  const ft=(k,l,c='')=>`<div class="ftab ${c} ${S.txFilter===k?'active':''}" onclick="setFilter('${k}')">${l}</div>`;
   document.getElementById('main').innerHTML=`
     ${monthBar()}
-    <div class="summary-strip">
+    <div class="summary-strip three">
       <div class="scard"><div class="scard-label">收入</div><div class="scard-val inc">${fmt(allInc)}</div></div>
       <div class="scard"><div class="scard-label">支出</div><div class="scard-val exp">${fmt(allExp)}</div></div>
+      <div class="scard"><div class="scard-label">買股</div><div class="scard-val stk">${fmt(allBuy)}</div></div>
     </div>
-    <div class="ftabs">${ft('all','全部')}${ft('inc','收入')}${ft('exp','支出')}${ft('xfr','轉帳')}</div>
+    <div class="ftabs">${ft('all','全部')}${ft('exp','支出')}${ft('inc','收入')}${ft('stk','股票','stk')}${ft('xfr','轉帳')}</div>
     ${txHtml}
     <div class="fab" onclick="openTxModal()">＋</div>`;
 }
@@ -553,26 +598,21 @@ function setFilter(f){ S.txFilter=f; render(); }
 // ── 記帳詳情 ──────────────────────────────────────────
 function openTxDetail(id){
   const t=S.txs.find(x=>x.id===id); if(!t) return;
-  const acc=S.accounts.find(a=>a.id===t.accountId);
-  const toAcc=t.toAccountId?S.accounts.find(a=>a.id===t.toAccountId):null;
-  const cat=catOf(t);
-  const typeLabel=t.type==='inc'?'收入':t.type==='exp'?'支出':'轉帳';
-  const amtColor=t.type==='inc'?'var(--green)':t.type==='exp'?'var(--red)':'var(--text3)';
+  const info=txInfo(t);
   const row=(k,v)=>`<div style="display:flex;justify-content:space-between;gap:12px"><span style="color:var(--text3)">${k}</span><span style="text-align:right">${v}</span></div>`;
   const bd=mkBackdrop('tx-detail-bd');
   bd.innerHTML=`<div class="modal">
     <div class="modal-hdr"><h3>記帳詳情</h3>
       <button class="close-btn" onclick="document.getElementById('tx-detail-bd').remove()">✕</button></div>
     <div style="text-align:center;margin-bottom:20px">
-      <div style="font-size:32px;margin-bottom:8px">${t.type==='xfr'?'↔':cat.icon}</div>
-      <div style="font-size:13px;color:var(--text3);margin-bottom:4px">${typeLabel}${t.type!=='xfr'?' · '+cat.name:''}</div>
-      <div style="font-size:28px;font-family:var(--mono);font-weight:500;color:${amtColor}">${fmt(t.amount)}</div>
+      <div style="font-size:32px;margin-bottom:8px">${info.icon}</div>
+      <div style="font-size:13px;color:var(--text3);margin-bottom:4px">${info.kind}</div>
+      <div style="font-size:28px;font-family:var(--mono);font-weight:500;color:${info.color}">${fmt(t.amount)}</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;margin-bottom:18px">
       ${row('備註',esc(t.desc||'—'))}
       ${row('日期',cleanDate(t.date))}
-      ${row(t.type==='xfr'?'轉出':'帳戶',esc(acc?.name||'—'))}
-      ${t.type==='xfr'?row('轉入',esc(toAcc?.name||'—')):''}
+      ${info.rows.map(r=>row(r[0],r[1])).join('')}
       ${t.userName?row('記帳者',esc(t.userName)):''}
     </div>
     <button class="submit-btn" style="margin-bottom:8px" onclick="openEditTx('${esc(id)}')">✏️ 編輯此筆</button>
@@ -591,7 +631,8 @@ async function deleteTx(id){
 }
 
 // ── 新增/編輯記帳 modal ───────────────────────────────
-let _txType='exp';
+let _txType='exp';   // 表單模式：exp 支出、inc 收入、xfr 轉帳、stk 股票
+let _stkKind='buy';  // 股票模式下：buy 買、sell 賣、div 股利
 
 // ── 金額計算機 ─────────────────────────────────────────
 let _amt='';          // 算式字串，例如 "120+35×2"
@@ -700,7 +741,7 @@ document.addEventListener('keydown',e=>{
 
 function openTxModal(){
   if(S.accounts.length===0){ showToast('請先新增帳戶'); switchTab('assets'); return; }
-  _txType='exp'; _padOpen=true;
+  _txType='exp'; _stkKind='buy'; _padOpen=true;
   const bd=mkBackdrop('tx-modal-bd');
   bd.innerHTML=buildTxHTML(null,'');
   document.body.appendChild(bd);
@@ -710,7 +751,7 @@ function openTxModal(){
 function openEditTx(id){
   const t=S.txs.find(x=>x.id===id); if(!t) return;
   document.getElementById('tx-detail-bd')?.remove();
-  _txType=t.type; _padOpen=false;
+  _txType=t.stock?'stk':t.type; _stkKind=t.stock||'buy'; _padOpen=false;
   const bd=mkBackdrop('tx-modal-bd');
   bd.innerHTML=buildTxHTML({...t,category:normCatId(t)},id);
   document.body.appendChild(bd);
@@ -718,32 +759,66 @@ function openEditTx(id){
 }
 
 // v = 表單目前的值（新增時為 null）；editId = 編輯中的記錄 id（新增時為空字串）
+function accOpts(list,sel){ return list.map(a=>`<option value="${esc(a.id)}" ${a.id===sel?'selected':''}>${esc(a.name)}</option>`).join(''); }
+function pickAcc(list,...cands){ for(const c of cands){ if(c&&list.some(a=>a.id===c)) return c; } return list[0]?.id||''; }
+function stockFieldsHTML(v){
+  const sk=_stkKind, stocks=stockAccs(), cashes=cashAccs();
+  const kb=k=>`<button type="button" class="stk-btn${sk===k?' sel':''}" onclick="setStkKind('${k}')">${STK[k].icon}<span class="cn">${STK[k].name}</span></button>`;
+  let accHTML='';
+  if(sk!=='div'&&stocks.length===0){
+    accHTML=`<div class="notice">還沒有股票帳戶<br>先建一個，買賣股票的錢才有地方放
+      <br><button type="button" onclick="openAccModal('','invest')">＋ 建立股票帳戶</button></div>`;
+  }else if(sk==='buy'){
+    const from=pickAcc(cashes,v?.accountId,v?.toAccountId), to=pickAcc(stocks,v?.toAccountId,v?.accountId);
+    accHTML=`<div class="fgrp"><label class="flabel">扣款帳戶（錢從哪裡出）</label><select class="finput" id="tx-acc">${accOpts(cashes,from)}</select></div>
+      <div class="fgrp"><label class="flabel">股票帳戶</label><select class="finput" id="tx-acc-to">${accOpts(stocks,to)}</select></div>`;
+  }else if(sk==='sell'){
+    const from=pickAcc(stocks,v?.accountId,v?.toAccountId), to=pickAcc(cashes,v?.toAccountId,v?.accountId);
+    accHTML=`<div class="fgrp"><label class="flabel">股票帳戶</label><select class="finput" id="tx-acc">${accOpts(stocks,from)}</select></div>
+      <div class="fgrp"><label class="flabel">入帳帳戶（錢回到哪裡）</label><select class="finput" id="tx-acc-to">${accOpts(cashes,to)}</select></div>`;
+  }else{
+    const acc=pickAcc(cashes,v?.accountId,v?.toAccountId);
+    accHTML=`<div class="fgrp"><label class="flabel">入帳帳戶（股利匯到哪裡）</label><select class="finput" id="tx-acc">${accOpts(cashes,acc)}</select></div>`;
+  }
+  return `<div class="fgrp"><label class="flabel">要記什麼？</label>
+      <div class="stk-row">${kb('buy')}${kb('sell')}${kb('div')}</div>
+      <div class="stk-hint">${STK[sk].hint}</div></div>
+    <div class="fgrp"><label class="flabel">金額${sk==='buy'?'（當天扣款總額）':''}</label>
+      ${calcFieldHTML()}</div>
+    ${accHTML}`;
+}
 function buildTxHTML(v,editId){
   const isEdit=!!editId;
   _allowNeg=false;
   _amt=(v&&v.amount!=null&&v.amount!=='')?String(v.amount):'';
-  const fromId=v?.accountId||S.accounts[0]?.id||'';
-  let toId=v?.toAccountId||'';
-  if(!toId||toId===fromId) toId=(S.accounts.find(a=>a.id!==fromId)||S.accounts[0])?.id||'';
-  const opts=sel=>S.accounts.map(a=>`<option value="${esc(a.id)}" ${a.id===sel?'selected':''}>${esc(a.name)}</option>`).join('');
-  const cats=catList(_txType);
-  const hasCat=v&&cats.some(c=>c.id===v.category);
-  const catBtns=cats.map((c,i)=>{
-    const sel=hasCat?c.id===v.category:i===0;
-    return `<button class="cat-btn${sel?' sel':''}" data-id="${c.id}" onclick="selCat(this)">${c.icon}<span class="cn">${c.name}</span></button>`;
-  }).join('');
   const tb=(k,l)=>`<button class="type-btn${_txType===k?' on-'+k:''}" onclick="setTxType('${k}','${editId}')">${l}</button>`;
-  return `<div class="modal" id="tx-modal-inner">
-    <div class="modal-hdr"><h3>${isEdit?'編輯記帳':'新增記帳'}</h3>
-      <button class="close-btn" onclick="document.getElementById('tx-modal-bd').remove()">✕</button></div>
-    <div class="type-row">${tb('exp','支出')}${tb('inc','收入')}${tb('xfr','轉帳')}</div>
-    <div class="fgrp"><label class="flabel">金額</label>
+  let body;
+  if(_txType==='stk'){
+    body=stockFieldsHTML(v);
+  }else{
+    const all=S.accounts;
+    const fromId=pickAcc(all,v?.accountId);
+    let toId=v?.toAccountId||'';
+    if(!toId||toId===fromId||!all.some(a=>a.id===toId)) toId=(all.find(a=>a.id!==fromId)||all[0])?.id||'';
+    const cats=catList(_txType);
+    const hasCat=v&&cats.some(c=>c.id===v.category);
+    const catBtns=cats.map((c,i)=>{
+      const sel=hasCat?c.id===v.category:i===0;
+      return `<button class="cat-btn${sel?' sel':''}" data-id="${c.id}" onclick="selCat(this)">${c.icon}<span class="cn">${c.name}</span></button>`;
+    }).join('');
+    body=`<div class="fgrp"><label class="flabel">金額</label>
       ${calcFieldHTML()}</div>
     ${_txType!=='xfr'?`<div class="fgrp"><label class="flabel">分類</label><div class="cat-grid">${catBtns}</div></div>`:''}
     <div class="fgrp"><label class="flabel">${_txType==='xfr'?'轉出帳戶':'帳戶'}</label>
-      <select class="finput" id="tx-acc">${opts(fromId)}</select></div>
+      <select class="finput" id="tx-acc">${accOpts(all,fromId)}</select></div>
     ${_txType==='xfr'?`<div class="fgrp"><label class="flabel">轉入帳戶</label>
-      <select class="finput" id="tx-acc-to">${opts(toId)}</select></div>`:''}
+      <select class="finput" id="tx-acc-to">${accOpts(all,toId)}</select></div>`:''}`;
+  }
+  return `<div class="modal" id="tx-modal-inner" data-edit="${esc(editId)}">
+    <div class="modal-hdr"><h3>${isEdit?'編輯記帳':'新增記帳'}</h3>
+      <button class="close-btn" onclick="document.getElementById('tx-modal-bd').remove()">✕</button></div>
+    <div class="type-row">${tb('exp','支出')}${tb('inc','收入')}${tb('stk','股票')}${tb('xfr','轉帳')}</div>
+    ${body}
     <div class="fgrp"><label class="flabel">備註（選填）</label>
       <input class="finput" id="tx-desc" placeholder="可空白" value="${esc(v?.desc||'')}"></div>
     <div class="fgrp"><label class="flabel">日期</label>
@@ -773,6 +848,13 @@ function setTxType(t,editId){
   if(inner) inner.outerHTML=buildTxHTML(cur,editId);
   updateCalc();
 }
+function setStkKind(k){
+  const inner=document.getElementById('tx-modal-inner'); if(!inner) return;
+  const cur=readTxForm();
+  _stkKind=k;
+  inner.outerHTML=buildTxHTML(cur,inner.dataset.edit||'');
+  updateCalc();
+}
 function selCat(btn){
   document.querySelectorAll('#tx-modal-inner .cat-btn').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
@@ -782,19 +864,25 @@ async function saveTx(editId){
   const f=readTxForm();
   const amount=calcEval(f.amount);
   if(isNaN(amount)&&f.amount){ showToast('算式有誤，請檢查金額'); return; }
-  const accId=f.accountId;
-  const toAccId=_txType==='xfr'?(f.toAccountId||''):'';
   if(!amount||amount<=0){ showToast('請輸入金額'); return; }
-  if(!accId){ showToast('請選擇帳戶'); return; }
-  if(_txType==='xfr'&&!toAccId){ showToast('請選擇轉入帳戶'); return; }
-  if(_txType==='xfr'&&toAccId===accId){ showToast('轉出和轉入帳戶不能相同'); return; }
-  if(!f.date){ showToast('請選擇日期'); return; }
-  let category='';
-  if(_txType!=='xfr'){
-    category=catList(_txType).some(c=>c.id===f.category)?f.category:defaultCat(_txType);
+  let type=_txType, stock='', category='', accId=f.accountId, toAccId='';
+  if(_txType==='stk'){
+    stock=_stkKind;
+    if(stock==='div'){ type='inc'; category='invest'; }
+    else{ type='xfr'; toAccId=f.toAccountId||''; }
+    if(stock!=='div'&&stockAccs().length===0){ showToast('請先建立股票帳戶'); return; }
+    if(cashAccs().length===0){ showToast('請先新增銀行帳戶'); return; }
+  }else if(_txType==='xfr'){
+    toAccId=f.toAccountId||'';
+  }else{
+    category=catList(type).some(c=>c.id===f.category)?f.category:defaultCat(type);
   }
+  if(!accId){ showToast('請選擇帳戶'); return; }
+  if(type==='xfr'&&!toAccId){ showToast('請選擇轉入帳戶'); return; }
+  if(type==='xfr'&&toAccId===accId){ showToast('轉出和轉入帳戶不能相同'); return; }
+  if(!f.date){ showToast('請選擇日期'); return; }
   const btn=document.getElementById('tx-submit'); if(btn) btn.disabled=true;
-  const base={type:_txType,amount,accountId:accId,toAccountId:toAccId,desc:f.desc.trim(),date:f.date,category};
+  const base={type,stock,amount,accountId:accId,toAccountId:toAccId,desc:f.desc.trim(),date:f.date,category};
   try{
     if(editId){
       const t=S.txs.find(x=>x.id===editId);
@@ -847,6 +935,19 @@ function renderStats(){
     const exp=inMonth.filter(t=>t.type==='exp').reduce((s,t)=>s+Number(t.amount),0);
     bars.push({label:`${m}月`,inc,exp,net:inc-exp});
   }
+  const sBuy=sumAmt(mTxs.filter(t=>t.stock==='buy'));
+  const sSell=sumAmt(mTxs.filter(t=>t.stock==='sell'));
+  const sDiv=sumAmt(mTxs.filter(t=>t.stock==='div'));
+  const sRow=(icon,l,v,c)=>`<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:18px;width:24px;text-align:center">${icon}</span><span style="flex:1;font-size:13px">${l}</span>
+      <span style="font-family:var(--mono);font-size:13px;color:${c}">${v}</span></div>`;
+  const stockCard=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px">股票（本月）</div>
+      ${sRow('📈','買進',fmt(sBuy),'var(--stk)')}
+      ${sRow('💵','賣出',fmt(sSell),'var(--text2)')}
+      ${sRow('💰','股利',fmt(sDiv),'var(--green)')}
+      <div style="font-size:12px;color:var(--text3);margin-top:8px">淨投入 ${sfmt(sBuy-sSell)}（買進 − 賣出）。買賣股票不算進上面的收支。</div>
+    </div>`;
   const maxVal=Math.max(...bars.map(b=>Math.max(b.inc,b.exp)),1);
   const barHtml=bars.map(b=>{
     const hi=Math.round(b.inc/maxVal*60); const he=Math.round(b.exp/maxVal*60);
@@ -870,6 +971,7 @@ function renderStats(){
         <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--red);opacity:.75;margin-right:4px"></span>支出</span>
       </div>
     </div>
+    ${stockCard}
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px">
       <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px">支出分類（共 ${fmt(totalExp)}）</div>
       ${catRows(groupByCat(expTxs,totalExp),'var(--red)')}
@@ -893,7 +995,7 @@ Object.assign(window,{
   switchTab,login,logout,
   openAccModal,saveAcc,deleteAcc,openAccDetail,
   openTxModal,openTxDetail,openEditTx,deleteTx,saveTx,
-  setTxType,selCat,chMonth,setFilter,calcPress,toggleCalc,
+  setTxType,setStkKind,selCat,chMonth,setFilter,calcPress,toggleCalc,
 });
 </script>
 </body>
